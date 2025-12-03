@@ -38,8 +38,8 @@
         <div class="topbar-user">
             <img src="/img/user.png" class="user-photo" alt="Foto">
             <div>
-                <p class="user-name">Profesional</p>
-                <p class="user-mail">@correo</p>
+                <p class="user-name"><%= profesional?.nombre || "Profesional" %></p>
+                <p class="user-mail"><%= profesional?.usuario || "@correo" %></p>
             </div>
         </div>
     </header>

@@ -85,6 +85,10 @@ router.get("/detalle/:id", requireRole("profesional"), async (req, res) => {
         }
 
         const atencion = rows[0];
+        // Formatear fecha/hora de turno para la vista de detalle
+        atencion.fecha_turno = atencion.fecha_turno
+            ? new Date(atencion.fecha_turno).toLocaleString("es-AR")
+            : "";
         const paciente = {
             id: atencion.pacienteId,
             nombreCompleto: atencion.pacienteNombre,

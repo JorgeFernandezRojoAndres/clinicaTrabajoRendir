@@ -69,6 +69,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Siempre intentamos refrescar los datos del paciente
     await cargarDatosPaciente(pacienteId);
 
+    const puntuar = (h) => {
+        const diagScore = h.diagnostico && h.diagnostico !== "Sin diagnóstico" ? 2 : 0;
+        const motivoScore = h.motivo && h.motivo !== "No registrado" ? 1 : 0;
+        const evoScore = h.evolucion ? 1 : 0;
+        return diagScore + motivoScore + evoScore;
+    };
+
     // Si es la vista de detalle, no sobreescribimos el contenido ya renderizado
     if (!contenedor || esDetalle) return;
 
@@ -82,24 +89,44 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const data = await res.json();
 
+        console.log("[pro-historia] respuesta backend:", data);
+
         if (!data.ok) {
             contenedor.innerHTML = `<p>No hay historial disponible.</p>`;
             return;
         }
 
-        const historial = data.historial;
+        // Deduplicar por turno (o id) y quedarnos con la versión más completa
+        const historial = Object.values(
+            data.historial.reduce((acc, h) => {
+                const key = h.turnoId || h.id;
+                const actual = acc[key];
+                if (!actual || puntuar(h) > puntuar(actual)) {
+                    acc[key] = h;
+                }
+                return acc;
+            }, {})
+        );
+
+        console.log("[pro-historia] historial deduplicado:", historial);
+
+        // Ocultar atenciones sin diagnóstico ni motivo, salvo que sean la única
+        let depurado = historial.filter(h => !(h.diagnostico === "Sin diagnóstico" && h.motivo === "No registrado"));
+        if (depurado.length === 0 && historial.length > 0) {
+            depurado = [historial[0]];
+        }
 
         // ===============================
         // 2. Renderizar historial
         // ===============================
-        if (!historial || historial.length === 0) {
+        if (!depurado || depurado.length === 0) {
             contenedor.innerHTML = `<p>Este paciente no tiene atenciones previas contigo.</p>`;
             return;
         }
 
         contenedor.innerHTML = "";
 
-        historial.forEach(h => {
+        depurado.forEach(h => {
             const item = document.createElement("div");
             item.classList.add("historia-card");
 

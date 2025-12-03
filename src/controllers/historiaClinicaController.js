@@ -87,6 +87,9 @@ const HistoriaClinicaController = {
             // --- Obtener historial desde el modelo ---
             const rows = await Atencion.getByPacienteYProfesional(pacienteId, profesionalId);
 
+            // Depuración: datos crudos obtenidos
+            console.log("[getHistoriaProfesional] rows crudos:", rows);
+
             if (!rows || rows.length === 0) {
                 return res.json({ ok: true, historial: [] });
             }
@@ -103,8 +106,9 @@ const HistoriaClinicaController = {
 
                 return {
                     id: r.id,
-                    motivo: r.motivo,
-                    evolucion: r.evolucion,
+                    turnoId: r.turnoId,
+                    motivo: r.motivo || "No registrado",
+                    evolucion: r.evolucion || "",
                     fecha_atencion: fechaAt,
                     fecha_turno: fechaTurno,
                     hora_turno: r.hora_turno,
@@ -112,6 +116,9 @@ const HistoriaClinicaController = {
                     diagnostico: r.diagnostico || "Sin diagnóstico"
                 };
             });
+
+            // Depuración: datos listos para el front
+            console.log("[getHistoriaProfesional] historial formateado:", historial);
 
             return res.json({ ok: true, historial });
 
