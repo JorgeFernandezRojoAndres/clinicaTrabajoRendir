@@ -1,0 +1,44 @@
+.turnos-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.turno-card {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #e1e8f9;
+    box-shadow: 0 4px 10px rgba(0,0,70,0.06);
+}
+
+.turno-card.confirmado {
+    border-left: 6px solid #0a6cff;
+}
+
+.info h3 {
+    color: #0a3d8f;
+    font-size: 18px;
+}
+
+.btn-cancelar {
+    background: #ff6464;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.badge {
+    align-self: center;
+    background: #e0f3ff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: #0a3d8f;
+    font-weight: 600;
+}

@@ -1,0 +1,31 @@
+.historial-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.historial-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e1e8f9;
+    box-shadow: 0 4px 10px rgba(0,0,70,0.06);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.historial-card h4 {
+    color: #0a3d8f;
+    font-size: 18px;
+}
+
+.btn-detalle {
+    background: #0a6cff;
+    color: white;
+    padding: 8px 14px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

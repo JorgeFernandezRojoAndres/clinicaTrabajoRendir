@@ -1,0 +1,231 @@
+/* ---------------------------------------------------------
+   TEMPLATE GENERAL — ESTILO PROFESIONAL
+   Estructura base compartida entre las vistas del módulo
+--------------------------------------------------------- */
+
+/* Contenedor principal */
+.container {
+    padding: 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ---------------------------------------------------------
+   SECCIONES / BOXES
+--------------------------------------------------------- */
+
+.box {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+}
+
+.box h3 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+}
+
+/* ---------------------------------------------------------
+   TARJETAS GENERALES
+--------------------------------------------------------- */
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--azul-oscuro);
+}
+
+/* ---------------------------------------------------------
+   FORMULARIOS
+--------------------------------------------------------- */
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #c9d3e0;
+    font-size: 14px;
+    background: #fafbfd;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--azul);
+    outline: none;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 108, 255, 0.15);
+}
+
+/* ---------------------------------------------------------
+   BOTONES GENERALES
+--------------------------------------------------------- */
+
+.btn {
+    background: var(--azul);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: var(--azul-oscuro);
+}
+
+.btn-secondary {
+    background: #8896a9;
+}
+
+.btn-secondary:hover {
+    background: #6d7a88;
+}
+
+.btn-danger {
+    background: #c83a3a;
+}
+
+.btn-danger:hover {
+    background: #a92f2f;
+}
+
+/* Botón deshabilitado */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------
+   TÍTULOS Y TIPOGRAFÍA
+--------------------------------------------------------- */
+
+h1, h2, h3, h4, h5 {
+    color: var(--azul-oscuro);
+    margin-top: 0;
+}
+
+p {
+    color: #4a4a4a;
+    margin: 0 0 6px;
+}
+
+/* ---------------------------------------------------------
+   UTILS
+--------------------------------------------------------- */
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt {
+    margin-top: 20px;
+}
+.mb {
+    margin-bottom: 20px;
+}
+
+/* ---------------------------------------------------------
+   MENÚ FLOTANTE — ATRÁS / ADELANTE
+--------------------------------------------------------- */
+
+#navMenu {
+    position: absolute;
+    top: 65px;
+    left: 20px;
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e3e6ee;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 160px;
+    animation: fadeIn 0.25s ease;
+}
+
+#navMenu.hidden {
+    display: none;
+}
+
+#navMenu button {
+    background: #f5f7fd;
+    border: 1px solid #cfd6e5;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+#navMenu button:hover {
+    background: #e9f0ff;
+    border-color: var(--azul);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+
+/* Efecto suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ---------------------------------------------------------
+   BOTÓN “Ver detalle” — estilo unificado
+--------------------------------------------------------- */
+
+.hc-ver-btn {
+    margin-top: 8px;
+    padding: 8px 18px;
+    background: var(--azul);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.hc-ver-btn:hover {
+    background: var(--azul-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}

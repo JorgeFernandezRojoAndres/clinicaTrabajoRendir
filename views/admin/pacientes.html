@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes - Admin</title>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/pacientes.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <button class="menu-btn">☰</button>
+    <h2>Pacientes</h2>
+</header>
+<div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+<main class="admin-container">
+
+    <div class="table-header">
+        <h3>Listado de Pacientes</h3>
+    </div>
+
+    <table id="tablaPacientes" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Completo</th>
+                <th>DNI</th>
+                <th>Obra Social</th>
+                <th>Contacto</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</main>
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="/js/admin/pacientes.js"></script>
+<script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+/* ---------------------------------------------------
+   TURNOS — Secretaría
+--------------------------------------------------- */
+
+/* Contenedor general */
+.turnos-container {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ----------------------------
+   BUSCADOR DE TURNOS
+---------------------------- */
+
+.buscador-turnos h3 {
+    color: #0a3d8f;
+    margin-bottom: 15px;
+}
+
+.buscador-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    align-items: end;
+}
+
+.buscador-turnos .field label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.buscador-turnos .field input,
+.buscador-turnos .field select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f7faff;
+    border: 1px solid #d4def4;
+}
+
+.buscador-turnos .btn-filtrar {
+    height: 45px;
+}
+
+/* ----------------------------
+   TARJETAS DE TURNOS
+---------------------------- */
+
+.lista-turnos {
+    margin-top: 25px;
+}
+
+.turno-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    border: 1px solid #e1e9fb;
+    box-shadow: 0 4px 10px rgba(0, 0, 60, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.turno-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 70, 0.12);
+}
+
+.turno-card.cancelado {
+    opacity: 0.6;
+    background: #ffe0e0;
+    border-color: #f5b3b3;
+}
+
+/* Información */
+.turno-info h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #0a3d8f;
+}
+
+.turno-detalle {
+    font-size: 14px;
+    color: #555;
+}
+
+/* ----------------------------
+   BOTONES DE ACCIÓN
+---------------------------- */
+
+.btn-reservar,
+.btn-confirmar,
+.btn-cancelar,
+.btn-pasar {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    transition: 0.15s ease;
+    white-space: nowrap;
+}
+
+/* Reservar */
+.btn-reservar {
+    background: #0a6cff;
+}
+.btn-reservar:hover {
+    background: #0059d6;
+}
+
+/* Confirmar */
+.btn-confirmar {
+    background: #009e35;
+}
+.btn-confirmar:hover {
+    background: #007727;
+}
+
+/* Cancelar */
+.btn-cancelar {
+    background: #cc0000;
+}
+.btn-cancelar:hover {
+    background: #9f0000;
+}
+
+/* Pasar a presente */
+.btn-pasar {
+    background: #8a5cff;
+}
+.btn-pasar:hover {
+    background: #6f3fe0;
+}
+
+/* Grupo de botones */
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 750px) {
+
+    .buscador-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .turno-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .btn-group {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .btn-group button {
+        width: 48%;
+    }
+
+    .btn-reservar {
+        width: 100%;
+    }
+}

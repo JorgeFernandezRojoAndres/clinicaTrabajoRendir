@@ -1,0 +1,16 @@
+/* ---------------------------------------------------
+   ESTILOS BASE
+--------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    background: #f5f8ff;
+    color: #333;
+    padding-bottom: 40px;
+}

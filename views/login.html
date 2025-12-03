@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso - Clínica Vida Activa</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- Tarjeta -->
+        <div class="login-card">
+
+            <!-- Logo + Título -->
+            <div class="login-header">
+                <img src="/img/logo-clinica.png" alt="Logo" class="logo">
+                <h2>CLÍNICA<br><span>VIDA ACTIVA</span></h2>
+            </div>
+
+            <!-- Selector de Rol -->
+            <div class="role-switch">
+                <button class="role-btn" id="btn-admin">Administrador</button>
+                <button class="role-btn" id="btn-profesional">Profesional</button>
+                <button class="role-btn active" id="btn-paciente">Paciente ✔</button>
+            </div>
+
+            <!-- Formulario -->
+            <form id="loginForm" method="POST" action="/auth/login">
+
+                <!-- Input oculto para mandar el rol al backend -->
+                <input type="hidden" name="rol" id="rol" value="paciente">
+
+                <div class="input-group">
+                    <span class="icon">👤</span>
+                    <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                </div>
+
+                <p id="error" class="error-msg"></p>
+
+                <div class="extra-options">
+                    <label>
+                        <input type="checkbox" name="recordarme">
+                        Recordarme
+                    </label>
+
+                    <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Ingresar</button>
+
+            </form>
+
+            <!-- Registrar -->
+            <p class="register-text">
+                ¿No tienes una cuenta? <a href="/pacientes/registro">Regístrate ahora.</a>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="login-footer">
+            <a href="#">Términos de uso</a>
+            <a href="#">Política de privacidad</a>
+            <a href="#">Ayuda</a>
+        </footer>
+
+    </div>
+
+    <!-- Archivo JS externo -->
+    <script src="/js/login.js"></script>
+</body>
+</html>

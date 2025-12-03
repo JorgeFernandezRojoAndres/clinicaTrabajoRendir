@@ -1,0 +1,206 @@
+/* ---------------------------------------------------
+   BASE GENERAL (comparten todas las vistas admin)
+--------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    background: #f5f8ff;
+    color: #333;
+}
+
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    border-bottom: 1px solid #e0e6f1;
+    box-shadow: 0 2px 6px rgba(0,0,50,0.05);
+}
+
+.topbar h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0a3d8f;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-photo {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-mail {
+    font-size: 12px;
+    color: #555;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* CONTENEDORES */
+.box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e1e8f9;
+    box-shadow: 0 4px 12px rgba(0,0,70,0.06);
+    margin-bottom: 25px;
+}
+
+.box h3 {
+    color: #0a3d8f;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* CAMPOS */
+.field label {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d4def4;
+    border-radius: 10px;
+    background: #f7faff;
+    font-size: 14px;
+    outline: none;
+}
+
+/* BOTONES */
+.btn-guardar,
+.btn-editar,
+.btn-eliminar,
+.btn-descargar {
+    background: #0a6cff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 3px 8px rgba(0,60,255,0.25);
+    transition: 0.15s ease-in-out;
+}
+
+.btn-guardar:hover,
+.btn-editar:hover,
+.btn-descargar:hover {
+    background: #0059d6;
+}
+
+.btn-eliminar {
+    background: #ff6464;
+}
+
+.btn-eliminar:hover {
+    background: #d63d3d;
+}
+
+/* GRID */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+.menu-btn {
+    background: #eef4ff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #0a3d8f;
+}
+
+.menu-btn:hover {
+    background: #dde8ff;
+    box-shadow: 0 2px 6px rgba(0,0,50,0.1);
+}
+
+/* ===========================
+      NAV MENU DESPLEGABLE
+=========================== */
+.nav-menu {
+    position: absolute;
+    top: 62px;
+    left: 20px;
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,70,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 99999;
+    width: 160px;
+
+    /* Animación */
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.nav-menu.hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+/* ===========================
+      BOTONES DEL MENÚ
+=========================== */
+.nav-menu button {
+    background: #eef4ff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #0a3d8f;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.18s;
+}
+
+.nav-menu button:hover {
+    background: #dbe7ff;
+    box-shadow: 0 2px 6px rgba(0,0,60,0.1);
+}

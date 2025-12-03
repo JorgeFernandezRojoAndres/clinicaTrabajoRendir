@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Médica - Vista Profesional</title>
+    <link rel="stylesheet" href="/css/profesional/profesional.css">
+
+    <!-- 🔥 NECESARIO PARA MOSTRAR ALERTAS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <!-- TOPBAR --------------------------------------------------------- -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+
+        <h2 class="topbar-title">CONSULTA MÉDICA - VISTA PROFESIONAL</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Profesional</p>
+                <p class="user-mail">@correo</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO ------------------------------------------------------ -->
+    <main class="container">
+
+        <!-- DATOS DEL PACIENTE -->
+        <section class="box">
+            <h3>Datos del Paciente</h3>
+
+            <div class="grid-2">
+                <div class="field">
+                    <label>Nombre completo:</label>
+                    <input id="pacienteNombre" type="text" disabled>
+                </div>
+
+                <div class="field">
+                    <label>Edad:</label>
+                    <input id="pacienteEdad" type="text" disabled>
+                </div>
+
+                <div class="field">
+                    <label>Género:</label>
+                    <select id="pacienteGenero" disabled>
+                        <option>Femenino</option>
+                        <option>Masculino</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOTIVO DE CONSULTA -->
+        <section class="box">
+            <h3>Motivo de consulta</h3>
+            <textarea id="motivo" class="textarea" rows="3" disabled></textarea>
+        </section>
+
+        <!-- EVOLUCIÓN -->
+        <section class="box">
+            <h3>Evolución</h3>
+
+            <textarea id="evolucion" class="textarea" rows="6" placeholder="Escribir evolución..."></textarea>
+        </section>
+
+        <!-- DIAGNÓSTICOS -->
+        <section class="box">
+            <h3>Diagnósticos</h3>
+
+            <div id="listaDiagnosticos">
+                <!-- Diagnósticos se cargarán dinámicamente -->
+            </div>
+
+            <button id="btnAddDiag" class="add-btn" type="button">+ Añadir Diagnóstico</button>
+        </section>
+
+        <!-- ALERGIAS / ANTECEDENTES / HÁBITOS / MEDICACIÓN -->
+        <section class="box-grid">
+
+            <div class="box small">
+                <h3>Alergias</h3>
+                <textarea id="alergias" class="textarea" rows="4"
+                    placeholder="Separar cada alergia con ENTER"></textarea>
+            </div>
+
+            <div class="box small">
+                <h3>Antecedentes</h3>
+                <textarea id="antecedentes" class="textarea" rows="4"
+                    placeholder="Separar cada antecedente con ENTER"></textarea>
+            </div>
+
+            <div class="box small">
+                <h3>Hábitos</h3>
+                <textarea id="habitos" class="textarea" rows="4"
+                    placeholder="Separar cada hábito con ENTER"></textarea>
+            </div>
+
+            <div class="box small">
+                <h3>Medicación en uso</h3>
+                <textarea id="medicacion" class="textarea" rows="4"
+                    placeholder="Separar cada medicación con ENTER"></textarea>
+            </div>
+
+        </section>
+
+        <!-- ACCIONES -->
+        <div class="bottom-actions">
+            <button id="btnGuardar" class="btn-save" type="button">Guardar Atención</button>
+            <button id="btnCerrar" class="btn-close" type="button">Cerrar Consulta</button>
+        </div>
+
+    </main>
+
+    <!-- ===========================================================
+         SCRIPT PARA CARGAR EL TURNO REAL
+    ============================================================ -->
+    <script>
+        // Ejemplo URL → /pro-atencion/10
+        const idTurno = window.location.pathname.split("/").pop();
+        console.log("ID del turno:", idTurno);
+    </script>
+
+    <!-- JS PRINCIPAL -->
+    <script src="/js/profesional/pro-atencion.js"></script>
+
+</body>
+</html>

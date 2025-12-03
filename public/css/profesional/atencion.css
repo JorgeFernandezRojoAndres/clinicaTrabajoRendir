@@ -1,0 +1,80 @@
+/* ---------------------------------------------------
+   EDITOR EVOLUCIÓN
+--------------------------------------------------- */
+
+.editor-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.editor-toolbar button {
+    background: #edf3ff;
+    border: 1px solid #c4d4f4;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Diagnósticos */
+.diagnostico-item {
+    background: #eef4ff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #cad8f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove {
+    background: #ff6464;
+    color: white;
+    border: none;
+    padding: 2px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-btn {
+    margin-top: 8px;
+    background: #0a6cff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Botones finales */
+.bottom-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.btn-save {
+    background: #0a6cff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 60, 255, 0.25);
+}
+
+.btn-close {
+    background: #616161;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}

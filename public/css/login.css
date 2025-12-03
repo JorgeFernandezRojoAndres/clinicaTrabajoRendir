@@ -1,0 +1,205 @@
+/* ===========================
+   RESET
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background: #f6faff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    color: #1b1d1f;
+}
+
+/* ===========================
+   CONTENEDOR PRINCIPAL
+=========================== */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* ===========================
+   TARJETA LOGIN
+=========================== */
+.login-card {
+    background: white;
+    width: 380px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 112, 255, 0.15);
+    text-align: center;
+    border: 1px solid #e6f0ff;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+.login-header {
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 55px;
+    margin-bottom: 10px;
+}
+
+.login-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.login-header span {
+    color: #0d6efd;
+}
+
+/* ===========================
+   SWITCH DE ROLES
+=========================== */
+.role-switch {
+    display: flex;
+    justify-content: center;
+    background: #e9f2ff;
+    padding: 5px;
+    border-radius: 25px;
+    margin-bottom: 25px;
+}
+
+.role-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.role-btn.active {
+    background: #0d6efd;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 112, 255, 0.3);
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+.input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.input-group .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    font-size: 15px;
+    border: 1.7px solid #cfe0ff;
+    border-radius: 12px;
+    background: #f7fbff;
+    outline: none;
+    transition: 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #0d6efd;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(0, 112, 255, 0.2);
+}
+
+/* ===========================
+   OPCIONES EXTRA
+=========================== */
+.extra-options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 22px;
+    color: #5a6b7b;
+}
+
+.extra-options .link {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.extra-options .link:hover {
+    text-decoration: underline;
+}
+
+/* ===========================
+   BOTÓN LOGIN
+=========================== */
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    background: #0d6efd;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 112, 255, 0.3);
+    transition: 0.2s;
+}
+
+.btn-login:hover {
+    background: #0b5ed7;
+}
+
+/* ===========================
+   REGISTRO
+=========================== */
+.register-text {
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.register-text a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+.login-footer {
+    margin-top: 25px;
+    display: flex;
+    gap: 18px;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.login-footer a {
+    color: #4a5b6c;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}

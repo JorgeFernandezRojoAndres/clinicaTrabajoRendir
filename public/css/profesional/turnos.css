@@ -1,0 +1,165 @@
+/* ---------------------------------------------------------
+   LISTA DE TURNOS DEL PROFESIONAL
+--------------------------------------------------------- */
+
+#turnos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+/* ---------------------------------------------------------
+   TARJETA DE TURNO
+--------------------------------------------------------- */
+
+.turno-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s ease;
+    border-left: 5px solid var(--azul);
+}
+
+.turno-card:hover {
+    transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------
+   INFO DEL PACIENTE Y HORA
+--------------------------------------------------------- */
+
+.turno-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.turno-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+}
+
+.turno-hora {
+    font-size: 15px;
+    color: #555;
+    margin: 0;
+}
+
+/* ---------------------------------------------------------
+   ESTADOS DE TURNOS
+--------------------------------------------------------- */
+
+.turno-estado {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+/* 🔵 Reservado */
+.turno-estado.reservado {
+    background: #d4e9ff;
+    color: #0f4c81;
+}
+
+/* 🟢 Confirmado */
+.turno-estado.confirmado {
+    background: #d9f7df;
+    color: #1b783c;
+}
+
+/* 🟡 En consulta */
+.turno-estado.en-consulta {
+    background: #fff4d1;
+    color: #b88702;
+}
+
+/* ⚫ Atendido */
+.turno-estado.atendido {
+    background: #e4e4e4;
+    color: #5a5a5a;
+}
+
+/* ---------------------------------------------------------
+   BOTÓN ATENDER / CONTINUAR / FINALIZADO
+--------------------------------------------------------- */
+
+.btn-atender {
+    background: var(--azul);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-atender:hover {
+    background: var(--azul-oscuro);
+}
+
+/* Estado deshabilitado */
+.btn-atender.disabled,
+.btn-atender:disabled {
+    background: #bfbfbf;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .turno-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .turno-estado {
+        margin: 0;
+    }
+
+    .btn-atender {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* ---------------------------------------------------------
+   BOTÓN HISTORIA (estilo secundario elegante)
+--------------------------------------------------------- */
+
+.btn-historia {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #ffffff;
+    border: 1px solid var(--azul);
+    color: var(--azul);
+    transition: 0.2s ease;
+}
+
+.btn-historia:hover {
+    background: var(--azul);
+    color: #fff;
+}
+
+/* Contenedor de botones */
+.turno-acciones {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

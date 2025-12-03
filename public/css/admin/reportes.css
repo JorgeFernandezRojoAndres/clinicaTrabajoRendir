@@ -1,0 +1,15 @@
+.reportes-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.rep-item {
+    background: #f7faff;
+    border: 1px solid #d4def4;
+    padding: 14px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes en Espera - Administrador</title>
+
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/especialidades.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <button class="menu-btn">☰</button>
+    <h2>PACIENTES EN ESPERA</h2>
+    <div class="topbar-user">
+        <img src="/img/user.png" class="user-photo">
+        <div>
+            <p class="user-name">Administrador</p>
+            <p class="user-mail">admin@clinica.com</p>
+        </div>
+    </div>
+</header>
+<div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+<main class="admin-container">
+
+    <section class="box">
+        <h3>Pacientes pendientes de aprobación</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Obra social</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaPacientesPendientes">
+                <!-- Se completa con JS -->
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<script src="/js/admin/listaEsperaPacientes.js"></script>
+<script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+</body>
+</html>

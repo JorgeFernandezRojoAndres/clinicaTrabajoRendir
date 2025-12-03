@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Paciente - Secretaría</title>
+    <link rel="stylesheet" href="/css/secretaria.css">
+    <link rel="stylesheet" href="/css/secretaria/registrarPaciente.css">
+</head>
+
+<body>
+
+    <!-- Topbar -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+
+        <h2>REGISTRAR PACIENTE</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Secretaría</p>
+                <p class="user-mail">secretaria@clinica.com</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor -->
+    <main class="registro-container">
+
+        <h2>Datos del Paciente</h2>
+
+        <form class="registro-form" id="formRegistrarPaciente">
+
+            <!-- Nombre -->
+            <div class="field">
+                <label>Nombre Completo</label>
+                <input type="text" name="nombre" required>
+            </div>
+
+            <!-- DNI -->
+            <div class="field">
+                <label>DNI</label>
+                <input type="number" name="dni" required>
+            </div>
+
+            <!-- Email -->
+            <div class="field col-span-2">
+                <label>Email</label>
+                <input type="email" name="email">
+            </div>
+
+            <!-- Teléfono -->
+            <div class="field">
+                <label>Teléfono</label>
+                <input type="text" name="telefono">
+            </div>
+
+            <!-- Género -->
+            <div class="field">
+                <label>Género</label>
+                <select name="genero">
+                    <option value="">Seleccione…</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                    <option value="O">Otro</option>
+                </select>
+            </div>
+
+            <!-- Fecha nacimiento -->
+            <div class="field">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" name="fecha_nacimiento">
+            </div>
+
+            <!-- Obra social -->
+            <div class="field">
+                <label>Obra Social</label>
+                <input type="text" name="obra_social">
+            </div>
+
+            <!-- Dirección -->
+            <div class="field col-span-2">
+                <label>Dirección</label>
+                <input type="text" name="direccion">
+            </div>
+
+        </form>
+
+        <!-- BOTONES -->
+        <div class="registro-actions">
+            <button class="btn-limpiar" type="reset" onclick="document.getElementById('formRegistrarPaciente').reset();">
+                LIMPIAR
+            </button>
+
+            <button class="btn-guardar" onclick="registrarPaciente()">
+                GUARDAR
+            </button>
+        </div>
+
+    </main>
+
+    <script src="/js/secretaria.js"></script>
+
+</body>
+</html>

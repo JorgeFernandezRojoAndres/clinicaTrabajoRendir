@@ -1,0 +1,37 @@
+/* ---------------------------------------------------
+   SIDEBAR PROFESIONAL
+--------------------------------------------------- */
+
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e6e9f2;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 25px 20px;
+    box-shadow: var(--shadow);
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--azul-oscuro);
+    font-size: 15px;
+    font-weight: 500;
+    margin: 12px 0;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.sidebar a:hover {
+    color: var(--azul);
+    padding-left: 4px;
+}

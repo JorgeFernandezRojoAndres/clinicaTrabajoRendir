@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Administrador</title>
+
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <button class="menu-btn">☰</button>
+    <h2>PANEL ADMINISTRATIVO</h2>
+    <div class="topbar-user">
+        <img src="/img/user.png" class="user-photo" alt="Foto">
+        <div>
+            <p class="user-name">Administrador</p>
+            <p class="user-mail">admin@clinica.com</p>
+        </div>
+    </div>
+</header>
+<div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+<main class="dashboard-container">
+
+    <!-- ==========================
+         TARJETAS PRINCIPALES
+    =========================== -->
+    <div class="stats-grid">
+
+        <!-- PROFESIONALES -->
+        <a href="/admin-panel/profesionales" class="stat-box link-box">
+            <h3>Profesionales</h3>
+            <p class="stat-desc">Gestionar personal médico</p>
+            <p class="stat-num" id="statProfesionales">0</p>
+        </a>
+
+        <!-- PACIENTES -->
+        <a href="/admin-panel/pacientes" class="stat-box link-box">
+            <h3>Pacientes</h3>
+            <p class="stat-desc">Total registrados</p>
+            <p class="stat-num" id="statPacientes">0</p>
+        </a>
+
+        <!-- TURNOS HOY -->
+        <a href="/admin-panel/reportes" class="stat-box link-box">
+            <h3>Turnos del día</h3>
+            <p class="stat-desc">Agendados para hoy</p>
+            <p class="stat-num" id="statTurnosHoy">0</p>
+        </a>
+
+
+        <!-- ==========================
+             NUEVOS BOTONES
+        =========================== -->
+
+        <!-- ESPECIALIDADES -->
+        <a href="/admin-panel/especialidades" class="stat-box link-box">
+            <h3>Especialidades</h3>
+            <p class="stat-desc">Administrar áreas médicas</p>
+            <p class="stat-num">+</p>
+        </a>
+
+        <!-- AGENDAS -->
+        <a href="/admin-panel/agendas" class="stat-box link-box">
+            <h3>Agendas</h3>
+            <p class="stat-desc">Horarios, bloques y reglas</p>
+            <p class="stat-num">+</p>
+        </a>
+
+        <!-- DÍAS NO LABORABLES (FERIADOS) -->
+        <a href="/admin-panel/feriados" class="stat-box link-box">
+            <h3>Días no laborables</h3>
+            <p class="stat-desc">Configurar feriados anuales</p>
+            <p class="stat-num">+</p>
+        </a>
+
+        <!-- LISTA DE ESPERA -->
+        <a href="/admin-panel/lista-espera" class="stat-box link-box">
+            <h3>Lista de Espera</h3>
+            <p class="stat-desc">Pacientes en espera</p>
+            <p class="stat-num">+</p>
+        </a>
+
+        <!-- CONFIGURACIÓN -->
+        <a href="/admin-panel/configuracion" class="stat-box link-box">
+            <h3>Configuración</h3>
+            <p class="stat-desc">Ajustes del sistema</p>
+            <p class="stat-num">⚙</p>
+        </a>
+
+    </div>
+
+</main>
+
+<!-- 🔥 SCRIPT DE DASHBOARD -->
+<script src="/js/admin/admin.js"></script>
+<script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+
+</body>
+</html>

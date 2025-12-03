@@ -1,0 +1,190 @@
+/* ---------------------------------------------------
+   CONTENEDOR GENERAL
+--------------------------------------------------- */
+
+.espera-container {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+
+/* ---------------------------------------------------
+   CAJA DE FILTROS
+--------------------------------------------------- */
+
+.filtros-box {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e0e6f1;
+    box-shadow: 0 4px 10px rgba(0, 0, 80, 0.05);
+    margin-bottom: 25px;
+}
+
+.filtros-box h3 {
+    font-size: 18px;
+    color: #0a3d8f;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d4def4;
+    background: #f7faff;
+    font-size: 14px;
+    outline: none;
+}
+
+.btn-filtrar {
+    background: #0a6cff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 60, 255, 0.25);
+    transition: 0.15s ease-in-out;
+}
+
+.btn-filtrar:hover {
+    background: #0059d6;
+}
+
+
+/* ---------------------------------------------------
+   LISTA
+--------------------------------------------------- */
+
+.lista-box h3 {
+    font-size: 18px;
+    color: #0a3d8f;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.espera-item {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e1e8f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 70, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    transition: 0.2s ease;
+}
+
+.espera-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 90, 0.10);
+}
+
+.espera-item .info h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0a3d8f;
+    margin-bottom: 5px;
+}
+
+.espera-item .info p {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #444;
+}
+
+
+/* ---------------------------------------------------
+   ACCIONES
+--------------------------------------------------- */
+
+.acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-asignar {
+    background: #0a6cff;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 3px 8px rgba(0, 60, 255, 0.25);
+}
+
+.btn-asignar:hover {
+    background: #0059d6;
+}
+
+.btn-eliminar {
+    background: #ff6464;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 3px 8px rgba(255, 80, 80, 0.25);
+}
+
+.btn-eliminar:hover {
+    background: #d84444;
+}
+
+
+/* ---------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .espera-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .acciones {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 650px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .acciones {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-asignar,
+    .btn-eliminar {
+        width: 100%;
+        text-align: center;
+    }
+}

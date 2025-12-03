@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendas - Administrador</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/agendas.css">
+    
+
+</head>
+
+<body>
+
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+        <h2>GESTIÓN DE AGENDAS</h2>
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo">
+            <div>
+                <p class="user-name">Administrador</p>
+                <p class="user-mail">admin@clinica.com</p>
+            </div>
+        </div>
+    </header>
+    <div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+    <main class="agendas-container">
+
+        <!-- ===================================================
+         CREAR NUEVA AGENDA
+    ====================================================== -->
+        <section class="box">
+            <h3>Crear nueva agenda</h3>
+
+            <div class="grid-3">
+
+                <!-- PROFESIONAL -->
+                <div class="field">
+                    <label for="profesionalSelect">Profesional</label>
+                    <select id="profesionalSelect">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
+
+                <!-- ESPECIALIDAD -->
+                <div class="field">
+                    <label for="especialidadSelect">Especialidad</label>
+                    <select id="especialidadSelect">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
+
+                <!-- INTERVALO -->
+                <div class="field">
+                    <label for="intervaloSelect">Intervalo</label>
+                    <select id="intervaloSelect">
+                        <option value="30">30 min</option>
+                        <option value="40">40 min</option>
+                        <option value="60">60 min</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- HORARIOS BASE -->
+            <div class="grid-2 mt-2">
+
+                <div class="field">
+                    <label for="horaInicio">Hora de inicio</label>
+                    <input type="time" id="horaInicio" value="08:00">
+                </div>
+
+                <div class="field">
+                    <label for="horaFin">Hora de fin</label>
+                    <input type="time" id="horaFin" value="12:00">
+                </div>
+
+            </div>
+
+            <!-- DÍAS LABORALES -->
+            <div class="dias-box mt-2">
+                <label>Días laborales:</label>
+                <div class="dias-grid">
+                    <label><input type="checkbox" value="1" checked> Lunes</label>
+                    <label><input type="checkbox" value="2" checked> Martes</label>
+                    <label><input type="checkbox" value="3" checked> Miércoles</label>
+                    <label><input type="checkbox" value="4" checked> Jueves</label>
+                    <label><input type="checkbox" value="5" checked> Viernes</label>
+                    <label><input type="checkbox" value="6"> Sábado</label>
+                    <label><input type="checkbox" value="0"> Domingo</label>
+                </div>
+            </div>
+
+            <button id="btnCrearAgenda" class="btn-guardar mt-2">Crear Agenda</button>
+        </section>
+
+        <!-- ===================================================
+         AGENDAS EXISTENTES
+    ====================================================== -->
+        <section class="box">
+            <h3>Agendas existentes</h3>
+
+            <div id="listaAgendas" class="lista-agendas">
+                <!-- Rellenado por agendas.js -->
+            </div>
+
+        </section>
+
+    </main>
+    <!-- ============================================================
+     MODAL EDITAR AGENDA
+============================================================ -->
+    <div class="modal fade" id="modalEditarAgenda" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Agenda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden" id="editAgendaId">
+
+                    <div class="mb-3">
+                        <label class="form-label">Intervalo (min)</label>
+                        <input type="number" id="editIntervalo" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Días laborales (ej: 1,2,3,4,5)</label>
+                        <input type="text" id="editDiasLaborales" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hora inicio</label>
+                        <input type="time" id="editHoraInicio" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hora fin</label>
+                        <input type="time" id="editHoraFin" class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger me-auto" id="btnEliminarAgenda">Eliminar</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="btnGuardarEdicion">Guardar cambios</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================
+     SCRIPTS NECESARIOS PARA QUE FUNCIONE LA PÁGINA
+====================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/admin/agendas.js"></script>
+    <script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+
+</body>
+
+</html>

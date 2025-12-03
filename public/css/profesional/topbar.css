@@ -1,0 +1,168 @@
+/* ---------------------------------------------------------
+   TOPBAR — MÓDULO PROFESIONAL
+--------------------------------------------------------- */
+
+.topbar {
+    width: 100%;
+    height: 65px;
+    background: white;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+/* ----------------------------
+   BOTÓN DEL MENÚ LATERAL
+---------------------------- */
+.menu-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--azul-oscuro);
+    padding: 6px 10px;
+    transition: 0.2s ease;
+}
+
+.menu-btn:hover {
+    color: var(--azul);
+    transform: scale(1.1);
+}
+
+/* ----------------------------
+   TÍTULO DE LA VISTA
+---------------------------- */
+.topbar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    margin: 0;
+}
+
+/* ----------------------------
+   CONTENEDOR DATOS USUARIO
+---------------------------- */
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* FOTO DEL USUARIO */
+.user-photo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--azul-claro);
+}
+
+/* DATOS DEL USUARIO */
+.topbar-user div {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.user-mail {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ----------------------------
+   RESPONSIVE
+---------------------------- */
+@media (max-width: 600px) {
+    .topbar {
+        padding: 0 12px;
+    }
+
+    .topbar h2 {
+        font-size: 18px;
+    }
+
+    .user-photo {
+        width: 36px;
+        height: 36px;
+    }
+}
+/* ---------------------------------------------------------
+   BOTONES DE NAVEGACIÓN (Atrás / Adelante)
+--------------------------------------------------------- */
+
+#navMenu {
+    position: absolute;
+    top: 65px;
+    left: 15px;
+    background: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #e3e3e3;
+}
+
+#navMenu.hidden {
+    display: none;
+}
+
+#navMenu button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f6f7fb;
+    border: 1px solid var(--gris-borde);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    width: 140px;
+    justify-content: center;
+}
+
+#navMenu button:hover {
+    background: var(--azul-claro);
+    border-color: var(--azul);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+/* ---------------------------------------------------------
+   BOTÓN “Ver detalle”
+--------------------------------------------------------- */
+
+.hc-ver-btn {
+    margin-top: 10px;
+    align-self: flex-start;
+    padding: 8px 18px;
+    background: var(--azul);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.hc-ver-btn:hover {
+    background: var(--azul-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}

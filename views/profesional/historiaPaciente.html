@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Clínica del Paciente</title>
+
+    <link rel="stylesheet" href="/css/profesional/profesional.css">
+</head>
+
+<body>
+
+    <!-- Barra superior -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+
+        <h2>HISTORIA CLÍNICA DEL PACIENTE</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Profesional</p>
+                <p class="user-mail">@correo</p>
+            </div>
+        </div>
+    </header>
+
+    <div id="navMenu" class="nav-menu hidden">
+        <button onclick="history.back()">⬅ Atrás</button>
+        <button onclick="history.forward()">➡ Adelante</button>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="container historia-container">
+
+
+        <!-- Encabezado del Paciente -->
+        <section class="box paciente-header">
+            <div class="header-left">
+                <img src="/img/paciente.png" class="paciente-foto" alt="Foto paciente">
+            </div>
+
+            <div class="header-right">
+                <h2 id="paciente-nombre" class="paciente-nombre">...</h2>
+                <p><strong>Edad:</strong> <span id="paciente-edad">...</span></p>
+                <p><strong>DNI:</strong> <span id="paciente-dni">...</span></p>
+                <p><strong>Obra Social:</strong> <span id="paciente-obra">...</span></p>
+            </div>
+        </section>
+
+        <!-- HISTORIAL -->
+        <section>
+            <h3 class="titulo-seccion">Historial de atenciones</h3>
+
+            <!-- 🔥 Tarjetas creadas por el JS -->
+            <div id="historial-clinico" class="historia-grid"></div>
+        </section>
+
+    </main>
+
+    <!-- Script específico del historial -->
+    <script src="/js/profesional/pro-historia.js"></script>
+
+    <script>
+        document.querySelector(".menu-btn").addEventListener("click", () => {
+            document.getElementById("navMenu").classList.toggle("hidden");
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Turnos - Profesional</title>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="/css/profesional/profesional.css">
+</head>
+
+<body>
+
+    <!-- ===========================================================
+         SIDEBAR LATERAL
+    ============================================================ -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Profesional</h2>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="/pro-panel">Mis Turnos</a></li>
+            <li><a href="/pro-historia">Historia Clínica</a></li>
+            <li><a href="/logout">Cerrar sesión</a></li>
+        </ul>
+    </aside>
+
+
+    <!-- ===========================================================
+         TOPBAR SUPERIOR
+    ============================================================ -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+
+        <h2>MIS TURNOS DEL DÍA</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Profesional</p>
+                <p class="user-mail">@correo</p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ===========================================================
+         CONTENIDO PRINCIPAL
+    ============================================================ -->
+    <main class="container">
+
+        <!-- FILTRO DE FECHA -->
+        <section class="box">
+            <h3>Fecha de consulta</h3>
+            <input type="date" class="date-selector">
+        </section>
+
+        <!-- LISTA DINÁMICA DE TURNOS DEL DÍA -->
+        <section id="turnos-lista"></section>
+
+    </main>
+
+
+    <!-- ===========================================================
+         SCRIPTS
+    ============================================================ -->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- 🔥 SCRIPT QUE CARGA LOS TURNOS DINÁMICOS -->
+    <script src="/js/profesional/misTurnos.js"></script>
+
+    <script>
+        // Sidebar toggle
+        const menuBtn = document.querySelector(".menu-btn");
+        const sidebar = document.querySelector(".sidebar");
+
+        menuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+        });
+
+        // Redirigir a vista de atención
+        document.addEventListener("click", (e) => {
+            const btn = e.target.closest(".btn-atender");
+            if (!btn || btn.disabled) return;
+
+            const id = btn.dataset.id;
+            if (!id) return;
+
+            window.location.href = `/pro-atencion/${id}`;
+        });
+    </script>
+
+</body>
+
+</html>

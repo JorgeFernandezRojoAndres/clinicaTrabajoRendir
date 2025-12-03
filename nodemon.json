@@ -1,0 +1,5 @@
+{
+  "watch": ["index.js"],
+  "ignore": ["src", "public", "views", "uml y diagramas"],
+  "ext": "js,json"
+}

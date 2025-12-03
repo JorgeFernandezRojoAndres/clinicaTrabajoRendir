@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Días No Laborables - Administrador</title>
+
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/feriados.css">
+</head>
+
+<body>
+
+<!-- =======================
+     TOPBAR ADMIN
+=========================== -->
+<header class="topbar">
+    <button class="menu-btn">☰</button>
+
+    <h2>DÍAS NO LABORABLES</h2>
+
+    <div class="topbar-user">
+        <img src="/img/user.png" class="user-photo">
+        <div>
+            <p class="user-name">Administrador</p>
+            <p class="user-mail">admin@clinica.com</p>
+        </div>
+    </div>
+</header>
+<div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+<!-- =======================
+     CONTENIDO PRINCIPAL
+=========================== -->
+<main class="admin-container">
+
+    <!-- =======================
+         FORMULARIO CARGA
+    ============================ -->
+    <section class="box">
+        <h3>Agregar feriado</h3>
+
+        <div class="grid-2">
+            <div class="field">
+                <label for="fechaFeriado">Fecha</label>
+                <input type="date" id="fechaFeriado">
+            </div>
+
+            <div class="field">
+                <label for="descripcionFeriado">Descripción</label>
+                <input type="text" id="descripcionFeriado" placeholder="Opcional">
+            </div>
+        </div>
+
+        <button id="btnAgregarFeriado" class="btn-guardar">Guardar</button>
+    </section>
+
+    <!-- =======================
+         LISTA
+    ============================ -->
+    <section class="box">
+        <h3>Feriados cargados</h3>
+
+        <div id="listaFeriados">
+            <!-- Se llena desde JS -->
+        </div>
+    </section>
+
+</main>
+
+<script src="/js/admin/diasNoLaborables.js"></script>
+<script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador - Secretaría</title>
+
+    <link rel="stylesheet" href="/css/secretaria.css">
+    <link rel="stylesheet" href="/css/secretaria/buscador.css">
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+
+        <h2>BUSCADOR</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Secretaría</p>
+                <p class="user-mail">secretaria@clinica.com</p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- CONTENEDOR -->
+    <main class="buscador-container">
+
+        <!-- FILTROS -->
+        <section class="buscador-box">
+
+            <h3>Búsqueda General</h3>
+
+            <div class="grid-3">
+
+                <div class="field">
+                    <label>Paciente</label>
+                    <input type="text" id="filtroPaciente" placeholder="Nombre o DNI...">
+                </div>
+
+                <div class="field">
+                    <label>Especialidad</label>
+                    <select id="filtroEspecialidad">
+                        <option value="">Todas</option>
+                        <option value="Clinica Médica">Clínica Médica</option>
+                        <option value="Pediatría">Pediatría</option>
+                        <option value="Traumatología">Traumatología</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Médico</label>
+                    <select id="filtroMedico">
+                        <option value="">Todos</option>
+                        <option value="Gomez">Dr. Gómez</option>
+                        <option value="Martinez">Dra. Martínez</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button class="btn-filtrar">Buscar</button>
+
+        </section>
+
+
+        <!-- RESULTADOS -->
+        <section class="resultados-box">
+
+            <h3>Resultados de la búsqueda</h3>
+
+            <div id="resultados">
+
+                <!-- ITEM 1 -->
+                <div class="resultado-item">
+                    <div class="info">
+                        <h4>Juan Pérez</h4>
+                        <p><b>DNI:</b> 42157896</p>
+                        <p><b>Última consulta:</b> 14/10/2025</p>
+                        <p><b>Especialidad:</b> Clínica Médica</p>
+                    </div>
+
+                    <div class="acciones">
+                        <button class="btn-turnos">Ver Turnos</button>
+                        <button class="btn-historia">Historia Clínica</button>
+                    </div>
+                </div>
+
+                <!-- ITEM 2 -->
+                <div class="resultado-item">
+                    <div class="info">
+                        <h4>Lucía Gómez</h4>
+                        <p><b>DNI:</b> 40211984</p>
+                        <p><b>Última consulta:</b> 02/11/2025</p>
+                        <p><b>Especialidad:</b> Traumatología</p>
+                    </div>
+
+                    <div class="acciones">
+                        <button class="btn-turnos">Ver Turnos</button>
+                        <button class="btn-historia">Historia Clínica</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/secretaria.js"></script>
+
+</body>
+</html>

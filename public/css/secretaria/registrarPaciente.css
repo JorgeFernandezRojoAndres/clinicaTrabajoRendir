@@ -1,0 +1,124 @@
+/* ---------------------------------------------------
+   REGISTRO DE PACIENTE — Secretaría
+--------------------------------------------------- */
+
+.registro-container {
+    max-width: 900px;
+    margin: 35px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid #e1e9fb;
+    box-shadow: 0 4px 12px rgba(0, 0, 60, 0.08);
+}
+
+/* Título */
+.registro-container h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0a3d8f;
+    margin-bottom: 20px;
+    border-left: 4px solid #0a6cff;
+    padding-left: 10px;
+}
+
+/* Formulario */
+.registro-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.registro-form .field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.registro-form .field input,
+.registro-form .field select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d4def4;
+    background: #f7faff;
+    font-size: 14px;
+}
+
+.registro-form .field input:focus,
+.registro-form .field select:focus {
+    border-color: #0a6cff;
+    box-shadow: 0 0 0 2px rgba(10, 108, 255, 0.2);
+}
+
+/* Campo grande (Dirección, Email, etc.) */
+.col-span-2 {
+    grid-column: span 2;
+}
+
+/* ----------------------------
+   BOTONES
+---------------------------- */
+
+.registro-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-guardar {
+    padding: 12px 28px;
+    border-radius: 10px;
+    background: #0a6cff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 80, 255, 0.25);
+    transition: 0.15s ease;
+}
+
+.btn-guardar:hover {
+    background: #0059d6;
+}
+
+.btn-limpiar {
+    padding: 12px 28px;
+    border-radius: 10px;
+    background: #777;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.btn-limpiar:hover {
+    background: #555;
+}
+
+/* ----------------------------
+   RESPONSIVE
+---------------------------- */
+
+@media (max-width: 780px) {
+    .registro-form {
+        grid-template-columns: 1fr;
+    }
+
+    .col-span-2 {
+        grid-column: span 1 !important;
+    }
+
+    .registro-actions {
+        flex-direction: column;
+    }
+
+    .registro-actions button {
+        width: 100%;
+    }
+}

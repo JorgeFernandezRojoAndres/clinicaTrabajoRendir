@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Clínica del Paciente</title>
+
+    <link rel="stylesheet" href="/css/profesional/profesional.css">
+</head>
+
+<body>
+
+    <!-- Barra superior -->
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+        <h2>HISTORIA CLÍNICA DEL PACIENTE</h2>
+
+        <div class="topbar-user">
+            <img src="/img/user.png" class="user-photo" alt="Foto">
+            <div>
+                <p class="user-name">Profesional</p>
+                <p class="user-mail">@correo</p>
+            </div>
+        </div>
+    </header>
+
+    <div id="navMenu" class="nav-menu hidden">
+        <button onclick="history.back()">⬅ Atrás</button>
+        <button onclick="history.forward()">➡ Adelante</button>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="container historia-container">
+
+        <!-- Encabezado del Paciente -->
+        <section class="box paciente-header">
+            <div class="header-left">
+                <img src="/img/paciente.png" class="paciente-foto" alt="Foto paciente">
+            </div>
+
+            <div class="header-right">
+                <!-- Mostrar datos dinámicos del paciente -->
+                <h2 id="paciente-nombre" class="paciente-nombre"><%= atencion.pacienteId %></h2>
+                <p><strong>Edad:</strong> <%= atencion.fecha %></p>
+                <p><strong>DNI:</strong> <%= atencion.motivo %></p>
+                <p><strong>Obra Social:</strong> <%= atencion.evolucion %></p>
+            </div>
+        </section>
+
+        <!-- HISTORIAL -->
+        <section>
+            <h3 class="titulo-seccion">Historial de atenciones</h3>
+
+            <!-- Mostrar los detalles de la atención -->
+            <div id="historial-clinico" class="historia-grid">
+                <p><strong>Fecha del Turno:</strong> <%= atencion.fecha_turno %></p>
+                <p><strong>Diagnóstico:</strong> <%= atencion.diagnostico || 'Sin diagnóstico' %></p>
+                <p><strong>Motivo:</strong> <%= atencion.motivo %></p>
+                <p><strong>Evolución:</strong> <%= atencion.evolucion %></p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Script específico del historial -->
+    <script src="/js/profesional/pro-historia.js"></script>
+
+    <script>
+        document.querySelector(".menu-btn").addEventListener("click", () => {
+            document.getElementById("navMenu").classList.toggle("hidden");
+        });
+    </script>
+
+</body>
+
+</html>

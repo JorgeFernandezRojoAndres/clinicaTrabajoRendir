@@ -1,0 +1,94 @@
+/* ============================
+   LISTADO DE PACIENTES – ADMIN
+   ============================ */
+
+body {
+    background: #f3f6fc;
+    font-family: "Inter", sans-serif;
+}
+
+/* Título */
+h2 {
+    margin: 20px 0;
+    color: #1d3557;
+    font-weight: 700;
+}
+
+/* Contenedor general */
+.pacientes-container {
+    width: 95%;
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* ============================
+      TABLA
+   ============================ */
+
+#tablaPacientes {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Encabezado */
+#tablaPacientes thead th {
+    background: #e8f1ff;
+    color: #1d3557;
+    font-weight: 600;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* Filas */
+#tablaPacientes tbody td {
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eef2f7;
+}
+
+/* Hover fila */
+#tablaPacientes tbody tr:hover {
+    background: #f5faff;
+}
+
+/* ============================
+   DATATABLES CUSTOM
+   ============================ */
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #cfd9ea;
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #cfd9ea;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 8px;
+    background: #e3ecff;
+    color: #1d3557 !important;
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #457bff !important;
+    color: #fff !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #aac7ff !important;
+    color: white !important;
+}

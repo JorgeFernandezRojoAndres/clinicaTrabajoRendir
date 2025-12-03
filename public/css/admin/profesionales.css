@@ -1,0 +1,219 @@
+/* ================================================
+   CONTENEDOR GENERAL
+================================================ */
+.admin-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================
+   HEADER DE TABLA
+================================================ */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.table-header h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #0d3b66;
+}
+
+.btn-primary {
+    padding: 10px 18px;
+    background: #1a73e8;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s ease;
+    box-shadow: 0 3px 8px rgba(26,115,232,0.25);
+}
+
+.btn-primary:hover {
+    background: #0b5ed7;
+}
+
+/* ================================================
+   TABLA PROFESIONALES
+================================================ */
+.table {
+    background: white;
+    border-radius: 14px !important;
+    border: 1px solid #e1e8f9;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,60,0.08);
+}
+
+table.dataTable thead th {
+    background: #f0f4ff;
+    color: #0a3d8f;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 1px solid #d7def0;
+}
+
+table.dataTable tbody td {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Filas */
+table.dataTable tbody tr {
+    transition: 0.18s ease;
+}
+
+table.dataTable tbody tr:hover {
+    background: #eef4ff !important;
+    transform: scale(1.002);
+}
+
+/* ================================================
+   BOTONES DE ACCIÓN
+================================================ */
+.btn-accion {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+    margin-right: 4px;
+}
+
+/* Editar */
+.btn-edit {
+    background: #e2ecff;
+    color: #1a73e8;
+}
+.btn-edit:hover {
+    background: #d0dfff;
+}
+
+/* Eliminar */
+.btn-delete {
+    background: #ffe1e1;
+    color: #d63232;
+}
+.btn-delete:hover {
+    background: #ffd3d3;
+}
+
+/* ================================================
+   SWEETALERT CUSTOM (opcional)
+================================================ */
+.swal2-popup {
+    border-radius: 16px !important;
+    font-family: "Segoe UI";
+}
+
+.swal2-confirm {
+    border-radius: 8px !important;
+}
+
+/* ================================================
+   RESPONSIVE
+================================================ */
+@media (max-width: 768px) {
+    .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #btnNuevo {
+        width: 100%;
+    }
+
+    table.dataTable thead {
+        font-size: 0.85rem;
+    }
+}
+/* ============================================================
+   FIX DEFINITIVO — Paginación DataTables sin puntos ni viñetas
+============================================================ */
+.dataTables_wrapper .dataTables_paginate ul {
+    list-style: none !important;   /* ❌ saca los puntos */
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dataTables_wrapper .dataTables_paginate li {
+    list-style: none !important;   /* ❌ por si otro estilo lo revive */
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 14px !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    border: 1px solid #d4def4 !important;
+    color: #0a3d8f !important;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #e8f0fe !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #0a6cff !important;
+    color: white !important;
+    border: 1px solid #0a6cff !important;
+}
+
+.dataTables_info {
+    margin-bottom: 12px;
+    color: #555;
+}
+/* =======================================================
+   SWEETALERT — ESTILOS PARA ESPECIALIDADES
+   (Mejora el select y alinea todo como los inputs)
+======================================================= */
+.swal-especialidades {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.swal-especialidades label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.swal-especialidades select {
+    width: 100%;
+    height: 130px;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+    padding: 8px;
+    font-size: 15px;
+    background: #f7f9ff;
+}
+
+.swal-especialidades small {
+    color: #666;
+    margin-top: 4px;
+    font-size: 12px;
+}

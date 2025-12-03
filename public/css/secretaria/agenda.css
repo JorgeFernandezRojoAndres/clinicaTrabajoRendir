@@ -1,0 +1,48 @@
+/* ---------------------------------------------------
+   AGENDA — Estilos específicos
+--------------------------------------------------- */
+
+.calendar-event {
+    background: #0a6cff;
+    color: white;
+    padding: 6px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.calendar-event.reservado {
+    background: #e0f7ff;
+    color: #0077a4;
+}
+
+.calendar-event.confirmado {
+    background: #a4e3ff;
+    color: #004e78;
+}
+
+.calendar-event.cancelado {
+    background: #ffe0e0;
+    color: #9f0000;
+}
+
+.calendar-event.libre {
+    background: #e4ffe5;
+    color: #0a6f0a;
+}
+
+/* Hover */
+.calendar-event:hover {
+    transform: scale(1.03);
+    transition: 0.1s ease;
+}
+#calendar {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.calendar-box {
+    width: 100%;
+    margin-top: 20px;
+}

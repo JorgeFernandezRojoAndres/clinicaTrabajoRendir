@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Administrador</title>
+
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/reportes.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <button class="menu-btn">☰</button>
+    <h2>REPORTES</h2>
+
+    <div class="topbar-user">
+        <img src="/img/user.png" class="user-photo">
+        <div>
+            <p class="user-name">Administrador</p>
+            <p class="user-mail">admin@clinica.com</p>
+        </div>
+    </div>
+</header>
+<div id="navMenu" class="nav-menu hidden">
+    <button onclick="history.back()">⬅ Atrás</button>
+    <button onclick="history.forward()">➡ Adelante</button>
+</div>
+
+
+<main class="reportes-container">
+
+    <section class="box">
+        <h3>Generar Reporte</h3>
+
+        <div class="grid-3">
+            <div class="field">
+                <label>Tipo de reporte</label>
+                <select>
+                    <option>Turnos por día</option>
+                    <option>Consultas por profesional</option>
+                    <option>Pacientes nuevos</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Desde</label>
+                <input type="date">
+            </div>
+
+            <div class="field">
+                <label>Hasta</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <button class="btn-guardar">Generar</button>
+    </section>
+
+    <section class="box">
+        <h3>Últimos reportes generados</h3>
+
+        <div class="rep-item">
+            <p>Turnos — 10/11/2025</p>
+            <button class="btn-descargar">Descargar</button>
+        </div>
+
+        <div class="rep-item">
+            <p>Consultas — 08/11/2025</p>
+            <button class="btn-descargar">Descargar</button>
+        </div>
+
+    </section>
+
+</main>
+<script>
+document.querySelector(".menu-btn").addEventListener("click", () => {
+    document.getElementById("navMenu").classList.toggle("hidden");
+});
+</script>
+
+</body>
+</html>

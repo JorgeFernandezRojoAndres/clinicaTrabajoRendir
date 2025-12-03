@@ -1,0 +1,51 @@
+/* ---------------------------------------------------
+   TOPBAR
+--------------------------------------------------- */
+
+.topbar {
+    width: 100%;
+    height: 60px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    border-bottom: 1px solid #e0e6f1;
+    box-shadow: 0 2px 6px rgba(0, 0, 50, 0.05);
+}
+
+.topbar h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0a3d8f;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-photo {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.user-mail {
+    font-size: 12px;
+    color: #666;
+}
