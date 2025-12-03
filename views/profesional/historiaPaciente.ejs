@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/profesional/profesional.css">
 </head>
 
-<body>
+<body data-page="detalle" data-paciente-id="<%= paciente?.id %>">
 
     <!-- Barra superior -->
     <header class="topbar">
@@ -40,11 +40,10 @@
             </div>
 
             <div class="header-right">
-                <!-- Mostrar datos dinámicos del paciente -->
-                <h2 id="paciente-nombre" class="paciente-nombre"><%= atencion.pacienteId %></h2>
-                <p><strong>Edad:</strong> <%= atencion.fecha %></p>
-                <p><strong>DNI:</strong> <%= atencion.motivo %></p>
-                <p><strong>Obra Social:</strong> <%= atencion.evolucion %></p>
+                <h2 id="paciente-nombre" class="paciente-nombre"><%= paciente?.nombreCompleto || "..." %></h2>
+                <p><strong>Edad:</strong> <span id="paciente-edad"><%= paciente?.edad ?? "..." %></span></p>
+                <p><strong>DNI:</strong> <span id="paciente-dni"><%= paciente?.dni || "..." %></span></p>
+                <p><strong>Obra Social:</strong> <span id="paciente-obra"><%= paciente?.obraSocial || "..." %></span></p>
             </div>
         </section>
 

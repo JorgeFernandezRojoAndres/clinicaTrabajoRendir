@@ -60,12 +60,19 @@ router.get("/detalle/:id", requireRole("profesional"), async (req, res) => {
                 a.fecha,
                 a.motivo,
                 a.evolucion,
+                t.pacienteId AS pacienteId,
+                p.nombreCompleto AS pacienteNombre,
+                p.dni AS pacienteDni,
+                p.obraSocial AS pacienteObra,
+                p.fechaNacimiento AS pacienteFechaNac,
                 ha.fechaHora AS fecha_turno, 
                 h.diagnostico
             FROM 
                 Atencion a
             JOIN 
                 Turno t ON a.turnoId = t.id
+            JOIN 
+                PACIENTE p ON t.pacienteId = p.id
             LEFT JOIN 
                 historia_clinica h ON a.historiaClinicaId = h.id
             LEFT JOIN 
@@ -78,10 +85,21 @@ router.get("/detalle/:id", requireRole("profesional"), async (req, res) => {
         }
 
         const atencion = rows[0];
+        const paciente = {
+            id: atencion.pacienteId,
+            nombreCompleto: atencion.pacienteNombre,
+            dni: atencion.pacienteDni,
+            obraSocial: atencion.pacienteObra,
+            fechaNacimiento: atencion.pacienteFechaNac,
+            edad: atencion.pacienteFechaNac
+                ? new Date().getFullYear() - new Date(atencion.pacienteFechaNac).getFullYear()
+                : null
+        };
 
         // Renderiza la vista EJS y pasa los datos de la atención
         res.render("profesional/historiaPaciente", {
-            atencion: atencion  // Pasa los datos a la vista
+            atencion: atencion,  // Pasa los datos a la vista
+            paciente
         });
 
     } catch (err) {
