@@ -55,6 +55,21 @@ const PacienteController = {
         } catch (err) {
             res.status(500).json({ error: err.message });  // Maneja errores de la base de datos
         }
+    },
+
+    // Datos del paciente logueado
+    async getMe(req, res) {
+        try {
+            const pacienteId = req.session?.user?.id;
+            if (!pacienteId) {
+                return res.status(401).json({ ok: false, error: "Paciente no autenticado" });
+            }
+            const data = await Paciente.getById(pacienteId);
+            if (!data) return res.status(404).json({ ok: false, error: "Paciente no encontrado" });
+            return res.json({ ok: true, paciente: data });
+        } catch (err) {
+            return res.status(500).json({ ok: false, error: err.message });
+        }
     }
 };
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Paciente</title>
+    <link rel="stylesheet" href="/css/paciente/paciente.css">
+    <link rel="stylesheet" href="/css/paciente/dashboard.css">
+</head>
+<body>
+    <div class="dash-bg">
+        <div class="welcome-card">
+            <div class="welcome-icon">💙</div>
+            <div>
+                <p class="welcome-sub">Bienvenido,</p>
+                <h1 id="pac-nombre">Paciente</h1>
+            </div>
+        </div>
+
+        <div class="dash-actions">
+            <a class="dash-btn" href="/paciente/reservar">
+                <span class="emoji">📅</span>
+                <p>Reservar Turno</p>
+            </a>
+            <a class="dash-btn" href="/pac-panel/turnos">
+                <span class="emoji">🧾</span>
+                <p>Mis Turnos</p>
+            </a>
+            <a class="dash-btn" href="/paciente/datos">
+                <span class="emoji">🧑‍💼</span>
+                <p>Mis Datos</p>
+            </a>
+        </div>
+    </div>
+
+    <script src="/js/paciente/dashboard.js"></script>
+</body>
+</html>

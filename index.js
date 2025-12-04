@@ -163,8 +163,10 @@ app.get("/pro-atencion/:turnoId", requireRole("profesional"), (req, res) => {
 });
 // Panel Paciente
 app.get("/pac-panel", requireRole("paciente"), (req, res) => {
-    res.sendFile(path.join(__dirname, "views/paciente/misTurnos.html"));
+    res.sendFile(path.join(__dirname, "views/paciente/dashboard.html"));
 });
+// Datos del paciente logueado
+app.get("/paciente/datos", requireRole("paciente"), PacienteController.getMe);
 
 // Panel Admin (dashboard principal)
 app.get("/admin-panel", requireRole("admin"), (req, res) => {
