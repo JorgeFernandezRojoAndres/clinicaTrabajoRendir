@@ -317,12 +317,71 @@ async profesionalDelDia(req, res) {
         console.error("Error en profesionalDelDia:", err);
         res.status(500).json({ ok: false, error: "Error interno" });
     }
-},
+    },
+    // ===========================================================
+    // 📌 TURNOS DEL PACIENTE (sesión paciente)
+    // GET /turnos/paciente
+    // ===========================================================
+    async pacienteMisTurnos(req, res) {
+        try {
+            const pacienteId = req.session?.user?.id;
+            if (!pacienteId) {
+                return res.status(401).json({ ok: false, error: "Paciente no autenticado" });
+            }
 
-// ===========================================================
-// 📌 INICIAR / CONTINUAR CONSULTA
-// PUT /turnos/iniciar/:id
-// ===========================================================
+            // Turnos normales del paciente
+            const [turnos] = await db.query(`
+                SELECT 
+                    t.id,
+                    t.motivo,
+                    t.estado,
+                    ha.fechaHora AS fechaHora,
+                    DATE_ADD(ha.fechaHora, INTERVAL a.intervaloMin MINUTE) AS fechaHoraFin,
+                    pr.nombre AS medicoNombre,
+                    esp.nombre AS especialidadNombre,
+                    'normal' AS tipoTurno
+                FROM TURNO t
+                JOIN horario_agenda ha ON ha.id = t.horarioAgendaId
+                JOIN agenda a ON a.id = ha.agendaId
+                JOIN profesional_especialidad pe ON pe.id = a.profesionalEspecialidadId
+                JOIN profesional pr ON pr.id = pe.profesionalId
+                JOIN especialidad esp ON esp.id = pe.especialidadId
+                WHERE t.pacienteId = ?
+            `, [pacienteId]);
+
+            // Sobreturnos del paciente
+            const [sobreturnos] = await db.query(`
+                SELECT 
+                    s.id,
+                    s.motivo,
+                    'SOBRETURNO' AS estado,
+                    s.fechaHoraManual AS fechaHora,
+                    DATE_ADD(s.fechaHoraManual, INTERVAL 1 MINUTE) AS fechaHoraFin,
+                    pr.nombre AS medicoNombre,
+                    esp.nombre AS especialidadNombre,
+                    'sobreturno' AS tipoTurno
+                FROM SOBRETURNO s
+                LEFT JOIN profesional pr ON pr.id = s.profesionalId
+                LEFT JOIN especialidad esp ON esp.id = s.especialidadId
+                WHERE s.pacienteId = ?
+            `, [pacienteId]);
+
+            const todos = [...turnos, ...sobreturnos].sort((a, b) => {
+                return new Date(a.fechaHora) - new Date(b.fechaHora);
+            });
+
+            return res.json({ ok: true, turnos: todos });
+
+        } catch (err) {
+            console.error("Error en pacienteMisTurnos:", err);
+            return res.status(500).json({ ok: false, error: "Error interno" });
+        }
+    },
+
+    // ===========================================================
+    // 📌 INICIAR / CONTINUAR CONSULTA
+    // PUT /turnos/iniciar/:id
+    // ===========================================================
 async iniciarConsulta(req, res) {
     try {
         const id = req.params.id;

@@ -25,7 +25,9 @@ import diagnosticosRoutes from "./src/routes/diagnosticos.js";
 // ⭐ Rutas del Admin (API + Vistas)
 import adminRoutes from "./src/routes/admin.js";
 import proHistoriaRoutes from "./src/routes/pro-historia.js";
+import TurnoController from "./src/controllers/turnoController.js";
 import proPanelRoutes from "./src/routes/pro-panel.js";
+import PacienteController from "./src/controllers/pacienteController.js";
 
 // Necesario en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -105,6 +107,11 @@ app.get(
     }
 );
 
+// Ruta pública para registro de paciente (debe ir antes del use protegido)
+app.get("/pacientes/registro", (req, res) => {
+    res.sendFile(path.join(__dirname, "views/paciente/registro.html"));
+});
+app.post("/pacientes/registro", PacienteController.create);
 // 🔹 Pacientes → Solo SECRETARIA
 app.use("/pacientes", requireRoles(["secretaria", "admin"]), pacientesRoutes);
 
@@ -127,6 +134,8 @@ app.use("/agenda", requireRoles(["secretaria", "profesional", "admin"]), agendaR
 // 🔹 Turnos → SECRETARIA o PROFESIONAL
 app.use("/turnos", requireRoles(["secretaria", "profesional"]), turnosRoutes);
 app.use("/api/feriados", diasNoLaborablesRoutes);
+// 🔹 Turnos del paciente (sesión paciente)
+app.get("/turnos/paciente", requireRole("paciente"), TurnoController.pacienteMisTurnos);
 // 🔹 Panel profesional (HTML + datos)
 app.use("/", proPanelRoutes);
 
@@ -136,6 +145,10 @@ app.use("/", proPanelRoutes);
 
 // Login
 app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "views/login.html"));
+});
+// Alias /login -> misma vista
+app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "views/login.html"));
 });
 

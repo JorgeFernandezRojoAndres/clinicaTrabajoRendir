@@ -25,6 +25,8 @@ router.post("/sobreturno", TurnoController.crearSobreturno);
 
 // Turnos del profesional según fecha  ✅ FIX
 router.get("/profesional", TurnoController.profesionalDelDia);
+// Turnos del paciente (sesión paciente)
+router.get("/paciente", TurnoController.pacienteMisTurnos);
 
 // Iniciar / continuar consulta
 router.put("/iniciar/:id", TurnoController.iniciarConsulta);

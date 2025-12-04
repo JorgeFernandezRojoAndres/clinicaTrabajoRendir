@@ -11,50 +11,54 @@
 
 <body>
 
-<header class="topbar">
-    <h2>REGISTRO DE PACIENTE</h2>
-</header>
+<div class="registro-bg">
+    <div class="registro-card">
+        <h1>Registro de Paciente</h1>
 
-<main class="registro-container">
-    <form class="registro-form">
+        <form class="registro-form">
 
-        <h3>Datos personales</h3>
-
-        <div class="grid-2">
-            <div class="field">
-                <label>Nombre completo</label>
-                <input type="text">
+            <div class="input-wrap">
+                <span class="icon">👤</span>
+                <input id="nombreCompleto" type="text" placeholder="Nombre Completo" required>
             </div>
 
-            <div class="field">
-                <label>DNI</label>
-                <input type="number">
+            <div class="input-wrap">
+                <span class="icon">🪪</span>
+                <input id="dni" type="text" placeholder="DNI / Pasaporte" required>
             </div>
 
-            <div class="field">
-                <label>Email</label>
-                <input type="email">
+            <div class="input-wrap">
+                <span class="icon">✉️</span>
+                <input id="correo" type="email" placeholder="Correo electrónico" required>
             </div>
 
-            <div class="field">
-                <label>Teléfono</label>
-                <input type="text">
+            <div class="input-wrap">
+                <span class="icon">📞</span>
+                <input id="telefono" type="text" placeholder="Teléfono">
             </div>
 
-            <div class="field">
-                <label>Obra social</label>
-                <input type="text">
+            <div class="input-wrap">
+                <span class="icon">💳</span>
+                <input id="obraSocial" type="text" placeholder="Obra Social" required>
             </div>
 
-            <div class="field">
-                <label>Foto de DNI</label>
-                <input type="file" accept="image/*">
+            <div class="input-wrap">
+                <span class="icon">🔒</span>
+                <input id="password" type="password" placeholder="Contraseña" autocomplete="new-password">
             </div>
-        </div>
 
-        <button class="btn-registrar">Registrarme</button>
-    </form>
-</main>
+            <label class="upload-btn" for="fotoDni">
+                📷 Subir foto DNI
+            </label>
+            <input id="fotoDni" type="file" accept="image/*" hidden>
 
+            <button type="submit" class="btn-registrar">Registrar</button>
+
+            <p class="nota-validacion">Tu cuenta será validada por admisión</p>
+        </form>
+    </div>
+</div>
+
+<script src="/js/paciente/registro.js"></script>
 </body>
 </html>

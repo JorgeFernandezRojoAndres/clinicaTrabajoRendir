@@ -63,6 +63,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const usuario = form.usuario.value.trim();
     const password = form.password.value.trim();
     const rol = form.rol.value.trim(); // <-- viene del botón seleccionado
+    console.log("[login] submit", { usuario, rol });
 
     const res = await fetch("/auth/login", {
         method: "POST",
@@ -111,5 +112,15 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         default:
             alert("Rol no reconocido");
             break;
+    }
+});
+
+// Listener para el enlace de registro (paciente)
+document.addEventListener("DOMContentLoaded", () => {
+    const regLink = document.querySelector(".register-text a");
+    if (regLink) {
+        regLink.addEventListener("click", () => {
+            console.log("[login] click en registrarse -> /pacientes/registro");
+        });
     }
 });
