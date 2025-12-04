@@ -1,0 +1,121 @@
+/* ============================
+   ESTILO BASE – NEUMORFISMO SUAVE
+   ============================ */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    background: #f7fbff;
+    color: #1d3557;
+}
+
+/* Fondo general */
+.dash-bg {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ============================
+   TARJETA DE BIENVENIDA
+   ============================ */
+.welcome-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 20px;
+    box-shadow:
+        8px 8px 20px rgba(0, 0, 0, 0.08),
+        -8px -8px 20px rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+    border: 1px solid #e3eefc;
+}
+
+.welcome-icon {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0px 3px 6px rgba(33, 150, 243, 0.25));
+}
+
+.welcome-sub {
+    font-size: 15px;
+    margin: 0;
+    color: #5a7ca8;
+}
+
+#welcome-card h1,
+#pac-nombre {
+    font-size: 28px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ============================
+   BOTONES DEL DASHBOARD
+   ============================ */
+.dash-actions {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dash-btn {
+    background: #ffffff;
+    width: 170px;
+    height: 170px;
+    padding: 25px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #1d3557;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: 0.15s ease;
+    border: 1px solid #e2ecfa;
+
+    box-shadow:
+        6px 6px 15px rgba(0, 0, 0, 0.08),
+        -6px -6px 15px rgba(255, 255, 255, 0.95);
+}
+
+.dash-btn:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        10px 10px 25px rgba(0, 0, 0, 0.12),
+        -10px -10px 25px rgba(255, 255, 255, 0.95);
+}
+
+.dash-btn p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.dash-icon {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0px 3px 6px rgba(33, 150, 243, 0.25));
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 600px) {
+    .dash-btn {
+        width: 140px;
+        height: 140px;
+    }
+
+    .welcome-card {
+        max-width: 90%;
+    }
+}

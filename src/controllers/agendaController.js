@@ -29,6 +29,7 @@ async horariosLibres(req, res) {
 try {
     const id = req.params.id;
     const data = await Agenda.getHorariosLibres(id);
+    console.log("[AgendaController.horariosLibres] agendaId:", id, "rows:", data.length);
     res.json(data);
 } catch (err) {
     console.error("Error obteniendo horarios:", err);
