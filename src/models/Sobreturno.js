@@ -19,12 +19,25 @@ const Sobreturno = {
     },
 
     async create(data) {
-        const { horarioAgendaId, pacienteId, motivo, fechaHoraManual } = data;
+        const {
+            pacienteId,
+            motivo,
+            fechaHoraManual,
+            profesionalId,
+            especialidadId
+        } = data;
 
         const [result] = await db.query(
-            `INSERT INTO SOBRETURNO (horarioAgendaId, pacienteId, motivo, fechaHoraManual)
-         VALUES (?, ?, ?, ?)`,
-            [horarioAgendaId || null, pacienteId, motivo || null, fechaHoraManual || null]
+            `INSERT INTO SOBRETURNO 
+            (pacienteId, motivo, fechaHoraManual, profesionalId, especialidadId)
+            VALUES (?, ?, ?, ?, ?)`,
+            [
+                pacienteId,
+                motivo || null,
+                fechaHoraManual || null,
+                profesionalId || null,
+                especialidadId || null
+            ]
         );
 
         return result.insertId;
@@ -32,13 +45,26 @@ const Sobreturno = {
     ,
 
     async update(id, data) {
-        const { horarioAgendaId, pacienteId, motivo, fechaHoraManual } = data;
+        const {
+            pacienteId,
+            motivo,
+            fechaHoraManual,
+            profesionalId,
+            especialidadId
+        } = data;
 
         await db.query(
             `UPDATE SOBRETURNO 
-         SET horarioAgendaId = ?, pacienteId = ?, motivo = ?, fechaHoraManual = ?
+         SET pacienteId = ?, motivo = ?, fechaHoraManual = ?, profesionalId = ?, especialidadId = ?
          WHERE id = ?`,
-            [horarioAgendaId || null, pacienteId, motivo || null, fechaHoraManual || null, id]
+            [
+                pacienteId,
+                motivo || null,
+                fechaHoraManual || null,
+                profesionalId || null,
+                especialidadId || null,
+                id
+            ]
         );
 
         return true;

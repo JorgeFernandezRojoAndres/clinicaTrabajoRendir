@@ -78,6 +78,34 @@
 
     </main>
 
+    <!-- Menú lateral móvil -->
+    <nav id="navMenu" class="nav-menu hidden">
+        <ul>
+            <li><a href="/sec-panel">Inicio</a></li>
+            <li><a href="/auth/logout">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+    <style>
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background: #0d2a4a;
+            color: #fff;
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+        }
+        .nav-menu ul { list-style: none; padding: 0; margin: 0; }
+        .nav-menu li { margin: 12px 0; }
+        .nav-menu a { color: #fff; text-decoration: none; font-weight: 600; }
+        .nav-menu.show { transform: translateX(0); }
+        .nav-menu.hidden { display: block; } /* se usa solo para estado inicial */
+    </style>
+
   
 
     <!-- SweetAlert2 -->
@@ -160,6 +188,17 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.querySelector(".menu-btn");
+            const navMenu = document.getElementById("navMenu");
+            if (menuBtn && navMenu) {
+                menuBtn.addEventListener("click", () => {
+                    navMenu.classList.toggle("show");
+                });
+            }
+        });
+    </script>
 
 </body>
 

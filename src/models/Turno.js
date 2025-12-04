@@ -71,36 +71,32 @@ const Turno = {
 
 
     // ============================================================
-// NUEVO: FILTRAR TURNOS + SOBRETURNOS (unificados)
-// ============================================================
-async filtrar(medicoId, especialidadId, estado) {
+    // FILTRAR TURNOS + SOBRETURNOS (unificados)
+    // ============================================================
+    async filtrar(medicoId, especialidadId, estado) {
 
-    let filtros = "";
-    const params = [];
+        // ==============================
+        // 1) Filtros para turnos normales
+        // ==============================
+        let filtros = "";
+        const params = [];
 
-    // FILTRO MÉDICO
-    if (medicoId) {
-        filtros += " AND pr.id = ? ";
-        params.push(medicoId);
-    }
+        if (medicoId) {
+            filtros += " AND pr.id = ? ";
+            params.push(medicoId);
+        }
 
-    // FILTRO ESPECIALIDAD
-    if (especialidadId) {
-        filtros += " AND esp.id = ? ";
-        params.push(especialidadId);
-    }
+        if (especialidadId) {
+            filtros += " AND esp.id = ? ";
+            params.push(especialidadId);
+        }
 
-    // FILTRO ESTADO (solo para turnos normales)
-    let filtroEstado = "";
-    if (estado) {
-        filtroEstado = " AND UPPER(t.estado) = ? ";
-        params.push(estado.toUpperCase());
-    }
+        if (estado) {
+            filtros += " AND UPPER(t.estado) = ? ";
+            params.push(estado.toUpperCase());
+        }
 
-    // ==============================
-    // 1) TURNO NORMAL
-    // ==============================
-    const sqlTurnos = `
+        const sqlTurnos = `
         SELECT 
             t.id,
             t.motivo,
@@ -120,45 +116,62 @@ async filtrar(medicoId, especialidadId, estado) {
         JOIN especialidad esp ON pe.especialidadId = esp.id
         WHERE 1=1 
         ${filtros}
-        ${filtroEstado}
+        AND ( ? <> 'SOBRETURNO' )
     `;
+    params.push(estado ? estado.toUpperCase() : "");
 
-    // ==============================
-    // 2) SOBRETURNO
-    // ==============================
-    const sqlSobreturnos = `
+        // ==============================
+        // 2) Filtros para sobreturnos
+        // ==============================
+        let filtrosSobre = "";
+        const paramsSobre = [];
+
+        if (medicoId) {
+            filtrosSobre += " AND s.profesionalId = ? ";
+            paramsSobre.push(medicoId);
+        }
+
+        if (especialidadId) {
+            filtrosSobre += " AND s.especialidadId = ? ";
+            paramsSobre.push(especialidadId);
+        }
+
+        if (estado && estado.toUpperCase() !== "SOBRETURNO") {
+            filtrosSobre += " AND 1=0 "; // No mostrar sobreturnos.
+        }
+
+        const sqlSobreturnos = `
         SELECT 
             s.id,
-            'Sobreturno' AS motivo,
+            s.motivo,
             'SOBRETURNO' AS estado,
             p.nombreCompleto AS pacienteNombre,
-            ha.fechaHora AS fechaHora,
-            DATE_ADD(ha.fechaHora, INTERVAL a.intervaloMin MINUTE) AS fechaHoraFin,
+            s.fechaHoraManual AS fechaHora,
+            DATE_ADD(s.fechaHoraManual, INTERVAL 1 MINUTE) AS fechaHoraFin,
             pr.nombre AS medicoNombre,
             esp.nombre AS especialidadNombre,
             'sobreturno' AS tipoTurno
         FROM SOBRETURNO s
         JOIN PACIENTE p ON s.pacienteId = p.id
-        JOIN HORARIO_AGENDA ha ON s.horarioAgendaId = ha.id
-        JOIN AGENDA a ON ha.agendaId = a.id
-        JOIN profesional_especialidad pe ON a.profesionalEspecialidadId = pe.id
-        JOIN profesional pr ON pe.profesionalId = pr.id
-        JOIN especialidad esp ON pe.especialidadId = esp.id
+        LEFT JOIN profesional pr ON pr.id = s.profesionalId
+        LEFT JOIN especialidad esp ON esp.id = s.especialidadId
         WHERE 1=1 
-        ${filtros}
+        ${filtrosSobre}
     `;
 
-    // ==============================
-    // Ejecutar ambas consultas
-    // ==============================
-    const [turnosNormales] = await db.query(sqlTurnos, params);
-    const [sobreturnos]   = await db.query(sqlSobreturnos, params);
+        // ==============================
+        // Ejecutar ambas
+        // ==============================
+        let turnosNormales = [];
+        const [tn] = await db.query(sqlTurnos, params);
+        turnosNormales = tn;
+        const [sobreturnos] = await db.query(sqlSobreturnos, paramsSobre);
 
-    // ==============================
-    // Unir resultados
-    // ==============================
-    return [...turnosNormales, ...sobreturnos];
-}
+        // ==============================
+        // Unir
+        // ==============================
+        return [...turnosNormales, ...sobreturnos];
+    }
 
 };
 

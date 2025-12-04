@@ -81,6 +81,9 @@ const TurnoController = {
                 return res.status(400).json({ error: "La agenda no coincide con el médico/especialidad" });
             }
 
+            const profesionalIdReal = pe.profesionalId;
+            const especialidadIdReal = pe.especialidadId;
+
             // ================================
             // 2️⃣ VALIDAR HORARIO (solo si existe)
             // ================================
@@ -127,12 +130,12 @@ const TurnoController = {
             }
 
             // -----------  SOBRETURNO  -----------
-            if (tipoTurno === "sobreturno") {
+                if (tipoTurno === "sobreturno") {
 
-                // ============================
-                // CASO 1: Sobreturno CON horario base
-                // ============================
-                if (horarioAgendaId) {
+                    // ============================
+                    // CASO 1: Sobreturno CON horario base
+                    // ============================
+                    if (horarioAgendaId) {
 
                     if (await Turno.existeTurnoPaciente(horarioAgendaId, pacienteId)) {
                         return res.status(400).json({ error: "Ya tiene un turno normal en ese horario" });
@@ -142,26 +145,28 @@ const TurnoController = {
                         return res.status(400).json({ error: "Ya tiene un sobreturno en ese horario" });
                     }
 
-                    const nuevoSobre = await Sobreturno.create({
-                        horarioAgendaId,
-                        pacienteId,
-                        motivo: motivo || ""
-                    });
+                        const nuevoSobre = await Sobreturno.create({
+                            pacienteId,
+                            motivo: motivo || "",
+                            profesionalId: profesionalIdReal,
+                            especialidadId: especialidadIdReal
+                        });
 
-                    return res.json({ ok: true, idSobreturno: nuevoSobre });
-                }
+                        return res.json({ ok: true, idSobreturno: nuevoSobre });
+                    }
 
-                // ============================
-                // CASO 2: Sobreturno SIN horario base
-                // ============================
+                    // ============================
+                    // CASO 2: Sobreturno SIN horario base
+                    // ============================
                 const fechaHoraFake = `${fecha}T23:59:00`;
 
-                const nuevoSobre = await Sobreturno.create({
-                    horarioAgendaId: null,
-                    pacienteId,
-                    motivo: motivo || "",
-                    fechaHoraManual: fechaHoraFake
-                });
+                    const nuevoSobre = await Sobreturno.create({
+                        pacienteId,
+                        motivo: motivo || "",
+                        fechaHoraManual: fechaHoraFake,
+                        profesionalId: profesionalIdReal,
+                        especialidadId: especialidadIdReal
+                    });
 
                 return res.json({
                     ok: true,
@@ -260,7 +265,7 @@ async profesionalDelDia(req, res) {
         // ----------------------------------------------------
         // 2) OBTENER TURNOS DEL PROFESIONAL (YA ACTUALIZADOS)
         // ----------------------------------------------------
-        const [rows] = await db.query(`
+            const [rows] = await db.query(`
             SELECT 
                 t.id,
                 t.pacienteId AS id_paciente,
@@ -277,7 +282,36 @@ async profesionalDelDia(req, res) {
             ORDER BY ha.fechaHora ASC
         `, [profesionalId, fecha]);
 
-        return res.json({ ok: true, turnos: rows });
+        // ------------------------------------------------------------------
+        // SOBRETURNO del profesional en esa fecha (con o sin horario base)
+        // ------------------------------------------------------------------
+        const [sobreRows] = await db.query(`
+            SELECT 
+                st.id,
+                st.pacienteId AS id_paciente,
+                p.nombreCompleto AS paciente,
+                COALESCE(
+                    DATE_FORMAT(ha.fechaHora, '%H:%i'),
+                    DATE_FORMAT(st.fechaHoraManual, '%H:%i')
+                ) AS hora,
+                'SOBRETURNO' AS estado
+            FROM sobreturno st
+            JOIN paciente p ON p.id = st.pacienteId
+            LEFT JOIN horario_agenda ha ON ha.id = st.horarioAgendaId
+            LEFT JOIN agenda a ON a.id = ha.agendaId
+            LEFT JOIN profesional_especialidad pe ON pe.id = a.profesionalEspecialidadId
+            WHERE
+                (COALESCE(pe.profesionalId, st.profesionalId) = ?)
+                AND DATE(COALESCE(ha.fechaHora, st.fechaHoraManual)) = ?
+            ORDER BY hora ASC
+        `, [profesionalId, fecha]);
+
+        const turnosConSobre = [
+            ...rows,
+            ...sobreRows
+        ];
+
+        return res.json({ ok: true, turnos: turnosConSobre });
 
     } catch (err) {
         console.error("Error en profesionalDelDia:", err);
@@ -400,88 +434,28 @@ async finalizarConsulta(req, res) {
             const { medico, especialidad, estado } = req.query;
 
             // ------------------------------------------------------------------
-            // 1) TURNOS NORMALES
+            // 1) TURNOS (NORMALES + SOBRETURNOS) DESDE EL MODELO
             // ------------------------------------------------------------------
-            const turnos = await Turno.filtrar(medico, especialidad, estado);
+            const resultados = await Turno.filtrar(medico, especialidad, estado);
 
-            const turnosEventos = turnos.map(t => ({
-                id: `T-${t.id}`,
-                pacienteNombre: t.pacienteNombre,
-                start: t.fechaHora,
-                end: t.fechaHoraFin,
-                estado: t.estado,
-                motivo: t.motivo,
-                tipo: "normal"
-            }));
-
-            // ------------------------------------------------------------------
-            // 2) SOBRETURNO (filtrado por médico/especialidad)
-            // ------------------------------------------------------------------
-            const [sobreturnos] = await db.query(`
-            SELECT 
-                st.id,
-                st.horarioAgendaId,
-                st.pacienteId,
-                st.motivo,
-                st.fechaHoraManual,
-                p.nombreCompleto AS pacienteNombre,
-                ha.fechaHora AS fechaHoraBase,
-                pe.profesionalId,
-                pe.especialidadId
-            FROM sobreturno st
-            JOIN paciente p ON p.id = st.pacienteId
-            LEFT JOIN horario_agenda ha ON ha.id = st.horarioAgendaId
-            LEFT JOIN agenda a ON a.id = ha.agendaId
-            LEFT JOIN profesional_especialidad pe ON pe.id = a.profesionalEspecialidadId
-            WHERE
-                (
-                    ha.id IS NOT NULL
-                    AND ( ? IS NULL OR pe.profesionalId = ? )
-                    AND ( ? IS NULL OR pe.especialidadId = ? )
-                )
-                OR
-                (
-                    ha.id IS NULL
-                    AND ? IS NULL
-                )
-        `, [
-                medico || null, medico || null,
-                especialidad || null, especialidad || null,
-                medico || null
-            ]);
-
-            const sobreturnoEventos = sobreturnos
-                .map(s => {
-                    // si eligieron un estado distinto de "sobreturno", se oculta
-                    if (estado && estado.toLowerCase() !== "sobreturno") {
-                        return null;
-                    }
-
-                    const start =
-                        s.fechaHoraManual ||
-                        s.fechaHoraBase ||
-                        null;
-
-                    const endDate = new Date(start);
-                    endDate.setMinutes(endDate.getMinutes() + 1);
-
+            const eventos = resultados
+                .map(t => {
+                    const start = t.fechaHora;
+                    const end = t.fechaHoraFin || null;
+                    if (!start) return null;
                     return {
-                        id: `S-${s.id}`,
-                        pacienteNombre: s.pacienteNombre,
+                        id: `${t.tipoTurno === "sobreturno" ? "S" : "T"}-${t.id}`,
+                        pacienteNombre: t.pacienteNombre,
                         start,
-                        end: endDate.toISOString(),
-                        estado: "sobreturno",
-                        motivo: s.motivo || "",
-                        tipo: "sobreturno"
+                        end: end || new Date(new Date(start).getTime() + 60000).toISOString(),
+                        estado: t.estado,
+                        motivo: t.motivo,
+                        tipo: t.tipoTurno
                     };
                 })
-                .filter(e => e !== null);
+                .filter(Boolean);
 
-            // ------------------------------------------------------------------
-            // 3) RESPUESTA FINAL
-            // ------------------------------------------------------------------
-            const resultado = [...turnosEventos, ...sobreturnoEventos];
-            res.json(resultado);
+            res.json(eventos);
 
         } catch (err) {
             console.error("❌ Error en filtrar:", err);
