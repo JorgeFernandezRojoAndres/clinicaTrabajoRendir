@@ -117,8 +117,9 @@ const AuthController = {
     },
 
     async logout(req, res) {
-        req.session.destroy();
-        res.json({ ok: true });
+        req.session.destroy(() => {
+            res.redirect("/");
+        });
     }
 };
 
