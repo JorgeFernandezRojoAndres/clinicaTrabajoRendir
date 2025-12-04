@@ -83,7 +83,19 @@ const ProfesionalController = {
         try {
             const id = req.params.id;
 
-            await Profesional.update(id, req.body);
+            const { especialidades, ...data } = req.body;
+
+            await Profesional.update(id, data);
+
+            if (Array.isArray(especialidades)) {
+                await ProfesionalEspecialidad.deleteByProfesional(id);
+                for (const espId of especialidades) {
+                    await ProfesionalEspecialidad.create({
+                        profesionalId: id,
+                        especialidadId: espId
+                    });
+                }
+            }
 
             res.json({ ok: true });
 

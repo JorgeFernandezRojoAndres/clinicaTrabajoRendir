@@ -158,12 +158,12 @@ const AtencionController = {
     async addAlergia(req, res) {
         try {
             const atencionId = req.params.id;
-            const { descripcion } = req.body;
+            const { descripcion, nombre, importancia = null, desde = null, hasta = null } = req.body;
 
             await db.query(`
-                INSERT INTO alergia (atencionId, descripcion)
-                VALUES (?, ?)
-            `, [atencionId, descripcion]);
+                INSERT INTO alergia (atencionId, nombre, importancia, desde, hasta)
+                VALUES (?, ?, ?, ?, ?)
+            `, [atencionId, descripcion || nombre, importancia, desde, hasta]);
 
             return res.json({ ok: true, mensaje: "Alergia agregada." });
 

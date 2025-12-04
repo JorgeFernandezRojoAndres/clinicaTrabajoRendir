@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let medico = "";
     let especialidad = "";
     let estado = "";
+    let sucursal = "";
 
     // ---------------------------------------------------------
     // CARGAR MÉDICOS (SOLO PROFESIONALES)
@@ -56,6 +57,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // ---------------------------------------------------------
+    // CARGAR SUCURSALES (desde agendas)
+    // ---------------------------------------------------------
+    async function cargarSucursales() {
+        try {
+            const res = await fetch("/agenda/sucursales");
+            const data = await res.json();
+            const sucursales = data.ok ? data.sucursales : [];
+
+            const selectFiltro = document.getElementById("sucursal");
+            const selectModal = document.getElementById("sucursalSelectModal");
+
+            if (selectFiltro) {
+                selectFiltro.innerHTML = `<option value="">Todas</option>`;
+                sucursales.forEach(s => {
+                    selectFiltro.innerHTML += `<option value="${s}">${s}</option>`;
+                });
+            }
+
+            if (selectModal) {
+                selectModal.innerHTML = `<option value="">Seleccione sucursal</option>`;
+                sucursales.forEach(s => {
+                    selectModal.innerHTML += `<option value="${s}">${s}</option>`;
+                });
+            }
+        } catch (err) {
+            console.error("Error cargando sucursales:", err);
+        }
+    }
+
 
     // ---------------------------------------------------------
     // ABRIR MODAL PARA CREAR TURNO (ACTUALIZADO)
@@ -66,6 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const fechaInput = document.getElementById("fechaInput");
         fechaInput.value = fechaStr;
         await cargarTiposTurno(fechaStr);
+        // Sincronizar sucursal del filtro al modal (si existe)
+        const sucSel = document.getElementById("sucursal")?.value || "";
+        const sucModal = document.getElementById("sucursalSelectModal");
+        if (sucModal && sucSel) {
+            sucModal.value = sucSel;
+        }
 
 
         // ============================
@@ -173,16 +210,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const medicoId = document.getElementById("medicoSelectModal").value;
             const espId = document.getElementById("especialidadSelectModal").value;
             const horarioSelect = document.getElementById("horarioSelectModal");
+            const sucursalSel = document.getElementById("sucursalSelectModal").value;
 
             console.log(">> CAMBIO MÉDICO");
-            console.log("medicoId:", medicoId, "espId:", espId);
+            console.log("medicoId:", medicoId, "espId:", espId, "sucursal:", sucursalSel);
 
-            if (!medicoId || !espId) return;
+            if (!medicoId || !espId || !sucursalSel) {
+                if (!sucursalSel) {
+                    Swal.fire("Seleccioná sucursal", "Elegí una sucursal para continuar", "info");
+                }
+                horarioSelect.innerHTML = `<option value="">Seleccione un horario</option>`;
+                horarioSelect.disabled = true;
+                return;
+            }
 
             // ================================
             // 1) BUSCAR LA AGENDA DEL MÉDICO
             // ================================
-            const resAg = await fetch(`/agenda/buscar?medicoId=${medicoId}&especialidadId=${espId}`);
+            const resAg = await fetch(`/agenda/buscar?medicoId=${medicoId}&especialidadId=${espId}&sucursal=${encodeURIComponent(sucursalSel)}`);
             const agendas = await resAg.json();
 
             console.log("AGENDA ENCONTRADA:", agendas);
@@ -311,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         events: function (info, success, failure) {
 
-            const url = `/turnos/filtrar?medico=${medico}&especialidad=${especialidad}&estado=${estado}`;
+            const url = `/turnos/filtrar?medico=${medico}&especialidad=${especialidad}&estado=${estado}&sucursal=${sucursal}`;
 
             fetch(url)
                 .then(res => res.json())
@@ -529,6 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
         medico = document.getElementById("medico").value;
         especialidad = document.getElementById("especialidad").value;
         estado = document.getElementById("estado").value;
+        sucursal = document.getElementById("sucursal").value;
 
         calendar.refetchEvents();
     });
@@ -538,5 +584,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---------------------------------------------------------
     cargarMedicos();
     cargarEspecialidades();
+    cargarSucursales();
 
 });

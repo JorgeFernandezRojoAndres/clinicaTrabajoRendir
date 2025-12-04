@@ -230,25 +230,48 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const evolucion = txtEvolucion.value;
+        const payloads = [
+            { url: `/atencion/${atencionId}`, body: { evolucion }, method: "PUT" },
+        ];
+
+        // Helpers para dividir los textarea por línea y armar peticiones
+        const toLines = (txt) =>
+            (txt || "")
+                .split("\n")
+                .map(t => t.trim())
+                .filter(Boolean);
+
+        toLines(contAlergias?.value).forEach(descripcion => {
+            payloads.push({ url: `/atencion/${atencionId}/alergias`, body: { descripcion }, method: "POST" });
+        });
+        toLines(contAntecedentes?.value).forEach(descripcion => {
+            payloads.push({ url: `/atencion/${atencionId}/antecedentes`, body: { descripcion }, method: "POST" });
+        });
+        toLines(contHabitos?.value).forEach(descripcion => {
+            payloads.push({ url: `/atencion/${atencionId}/habitos`, body: { descripcion }, method: "POST" });
+        });
+        toLines(contMedicacion?.value).forEach(descripcion => {
+            payloads.push({ url: `/atencion/${atencionId}/medicamentos`, body: { descripcion }, method: "POST" });
+        });
 
         try {
-            const res = await fetch(`/atencion/${atencionId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ evolucion })
-            });
-
-            const data = await res.json();
-
-            if (!data.ok) {
-                return Swal.fire("Error", data.error, "error");
+            for (const p of payloads) {
+                const res = await fetch(p.url, {
+                    method: p.method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(p.body)
+                });
+                const data = await res.json();
+                if (!data.ok) {
+                    throw new Error(data.error || "Error guardando datos");
+                }
             }
 
             Swal.fire("Guardado", "Atención actualizada.", "success");
 
         } catch (err) {
             console.error(err);
-            Swal.fire("Error", "No se pudo guardar.", "error");
+            Swal.fire("Error", err.message || "No se pudo guardar.", "error");
         }
     });
 

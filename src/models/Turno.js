@@ -73,7 +73,7 @@ const Turno = {
     // ============================================================
     // FILTRAR TURNOS + SOBRETURNOS (unificados)
     // ============================================================
-    async filtrar(medicoId, especialidadId, estado) {
+    async filtrar(medicoId, especialidadId, estado, sucursal) {
 
         // ==============================
         // 1) Filtros para turnos normales
@@ -89,6 +89,11 @@ const Turno = {
         if (especialidadId) {
             filtros += " AND esp.id = ? ";
             params.push(especialidadId);
+        }
+
+        if (sucursal) {
+            filtros += " AND a.sucursal = ? ";
+            params.push(sucursal);
         }
 
         if (estado) {
@@ -134,6 +139,11 @@ const Turno = {
         if (especialidadId) {
             filtrosSobre += " AND s.especialidadId = ? ";
             paramsSobre.push(especialidadId);
+        }
+
+        // Si se filtra por sucursal, los sobreturnos sin sucursal asociada se omiten
+        if (sucursal) {
+            filtrosSobre += " AND 1=0 ";
         }
 
         if (estado && estado.toUpperCase() !== "SOBRETURNO") {

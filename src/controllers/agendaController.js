@@ -60,7 +60,7 @@ async horarios(req, res) {
 // =======================================================
 async buscar(req, res) {
         try {
-            const { medicoId, especialidadId } = req.query;
+            const { medicoId, especialidadId, sucursal } = req.query;
 
             if (!medicoId || !especialidadId) {
                 return res.status(400).json({ ok: false, error: "Faltan parámetros" });
@@ -78,13 +78,24 @@ async buscar(req, res) {
 
             // Paso 2: obtener agenda real
             const agendas = await Agenda.getByProfesionalEspecialidadId(
-                profesionalEspecialidad.id
+                profesionalEspecialidad.id,
+                sucursal || null
             );
 
             res.json(agendas);
 
         } catch (err) {
             console.error("Error buscando agenda:", err);
+            res.status(500).json({ ok: false, error: "Error interno del servidor" });
+        }
+    },
+
+    async sucursales(req, res) {
+        try {
+            const data = await Agenda.getSucursales();
+            res.json({ ok: true, sucursales: data });
+        } catch (err) {
+            console.error("Error listando sucursales:", err);
             res.status(500).json({ ok: false, error: "Error interno del servidor" });
         }
     },

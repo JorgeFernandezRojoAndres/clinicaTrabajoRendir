@@ -514,12 +514,12 @@ async finalizarConsulta(req, res) {
     // 7. FILTRAR TURNOS (secretaría)
     async filtrar(req, res) {
         try {
-            const { medico, especialidad, estado } = req.query;
+            const { medico, especialidad, estado, sucursal } = req.query;
 
             // ------------------------------------------------------------------
             // 1) TURNOS (NORMALES + SOBRETURNOS) DESDE EL MODELO
             // ------------------------------------------------------------------
-            const resultados = await Turno.filtrar(medico, especialidad, estado);
+            const resultados = await Turno.filtrar(medico, especialidad, estado, sucursal);
 
             const eventos = resultados
                 .map(t => {

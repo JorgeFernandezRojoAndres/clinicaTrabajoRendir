@@ -50,6 +50,11 @@ const ProfesionalEspecialidad = {
     async delete(id) {
         await db.query("DELETE FROM PROFESIONAL_ESPECIALIDAD WHERE id = ?", [id]);
         return true;
+    },
+
+    async deleteByProfesional(profesionalId) {
+        await db.query("DELETE FROM PROFESIONAL_ESPECIALIDAD WHERE profesionalId = ?", [profesionalId]);
+        return true;
     }
 };
 

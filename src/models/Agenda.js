@@ -50,7 +50,7 @@ const Agenda = {
 
         return rows;
     }, async create(data) {
-        const { profesionalId, especialidadId, intervaloMin, diasLaborales, horaInicio, horaFin } = data;
+        const { profesionalId, especialidadId, intervaloMin, diasLaborales, horaInicio, horaFin, sucursal = "Central" } = data;
 
         // ---------------------------------------------
         // 1) Buscar relación profesional-especialidad
@@ -139,13 +139,14 @@ const Agenda = {
             horaFin,
             sucursal
         )
-        VALUES (?, ?, ?, ?, ?, 'Central')
+        VALUES (?, ?, ?, ?, ?, ?)
     `, [
             profesionalEspecialidadId,
             intervaloMin,
             diasLaborales,
             horaInicio,
-            horaFin
+            horaFin,
+            sucursal
         ]);
 
         const nuevaAgendaId = result.insertId;
@@ -167,13 +168,21 @@ const Agenda = {
     },
 
 async update(id, data) {
-        const { intervaloMin, diasLaborales, horaInicio, horaFin } = data;
+        const { intervaloMin, diasLaborales, horaInicio, horaFin, sucursal } = data;
+
+        const params = [intervaloMin, diasLaborales, horaInicio, horaFin];
+        let setSucursal = "";
+        if (typeof sucursal === "string") {
+            setSucursal = ", sucursal = ? ";
+            params.push(sucursal);
+        }
+        params.push(id);
 
         await db.query(`
             UPDATE agenda
-            SET intervaloMin = ?, diasLaborales = ?, horaInicio = ?, horaFin = ?
+            SET intervaloMin = ?, diasLaborales = ?, horaInicio = ?, horaFin = ? ${setSucursal}
             WHERE id = ?
-        `, [intervaloMin, diasLaborales, horaInicio, horaFin, id]);
+        `, params);
     },
 
     async delete(id) {
@@ -192,14 +201,32 @@ async update(id, data) {
     },
 
     // Buscar agendas por profesionalEspecialidadId
-    async getByProfesionalEspecialidadId(id) {
+    async getByProfesionalEspecialidadId(id, sucursal = null) {
+        const params = [id];
+        let whereSucursal = "";
+        if (sucursal) {
+            whereSucursal = " AND sucursal = ? ";
+            params.push(sucursal);
+        }
+
         const [rows] = await db.query(`
             SELECT *
             FROM agenda
             WHERE profesionalEspecialidadId = ?
-        `, [id]);
+            ${whereSucursal}
+        `, params);
 
         return rows;
+    },
+
+    async getSucursales() {
+        const [rows] = await db.query(`
+            SELECT DISTINCT sucursal
+            FROM agenda
+            WHERE sucursal IS NOT NULL AND sucursal <> ''
+            ORDER BY sucursal
+        `);
+        return rows.map(r => r.sucursal);
     }
 };
 

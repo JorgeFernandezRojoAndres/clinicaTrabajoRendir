@@ -7,6 +7,7 @@ router.get("/horarios/:id", AgendaController.horarios);
 router.get("/horarios-libres/:id", AgendaController.horariosLibres);
 
 router.get("/buscar", AgendaController.buscar);
+router.get("/sucursales", AgendaController.sucursales);
 router.get("/",       AgendaController.list);
 router.get("/:id",    AgendaController.get);
 router.post("/",      AgendaController.create);

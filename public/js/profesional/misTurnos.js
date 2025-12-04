@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const div = document.createElement("div");
                 div.classList.add("turno-card");
+                const esSobreturno = (t.estado || "").toUpperCase() === "SOBRETURNO";
+                const badgeSobreturno = esSobreturno ? `<span class="pill pill-sobre">SOBRETURNO</span>` : "";
 
                 // 🔥 REGLA FINAL
                 // SI ESTÁ ATENDIDO → NO HAY BOTÓN
@@ -85,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 div.innerHTML = `
     <div class="turno-info">
         <h3>${t.paciente}</h3>
-        <p class="turno-hora">${t.hora} hs</p>
+        <p class="turno-hora">${t.hora} hs ${badgeSobreturno}</p>
     </div>
 
     <div class="turno-estado ${t.estado.toLowerCase()}">

@@ -163,3 +163,20 @@
     gap: 10px;
     align-items: center;
 }
+
+/* Chip / badge */
+.pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    border: 1px solid transparent;
+}
+
+.pill-sobre {
+    background: #ffe9e9;
+    color: #b50707;
+    border-color: #f7b5b5;
+}
