@@ -1,13 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const selEsp = document.getElementById("sel-especialidad");
     const selMed = document.getElementById("sel-medico");
-    const selFecha = document.getElementById("sel-fecha");
+    const calendarEl = document.getElementById("calendar");
     const chips = document.getElementById("chips-horarios");
     const btn = document.getElementById("btn-reservar");
     const nombreEl = document.getElementById("pac-nombre-reserva");
 
     let horarioSeleccionado = null;
     let agendaIdActual = null;
+    let calendar = null;
+    let horariosActuales = [];
 
     // Cargar nombre paciente
     fetch("/paciente/datos", { credentials: "include" })
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function cargarEspecialidades() {
         const res = await fetch("/paciente/especialidades", { credentials: "include" });
         const data = await res.json();
+        console.log("[reserva] especialidades:", data);
         selEsp.innerHTML = `<option value="">Seleccionar especialidad</option>`;
         data.forEach(e => {
             const opt = document.createElement("option");
@@ -37,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!especialidadId) return;
         const res = await fetch(`/paciente/especialidades/${especialidadId}/medicos`, { credentials: "include" });
         const data = await res.json();
+        console.log("[reserva] medicos esp", especialidadId, data);
         data.forEach(m => {
             const opt = document.createElement("option");
             opt.value = m.id;
@@ -45,12 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const fechaMatch = (h, fechaSel) => {
+        const f =
+            h.fecha ||
+            (h.fechaHora ? h.fechaHora.substring(0, 10) : "");
+        return f === fechaSel;
+    };
+
     async function cargarHorarios() {
         chips.innerHTML = `<p>Cargando horarios...</p>`;
         horarioSeleccionado = null;
+        horariosActuales = [];
 
-        if (!selEsp.value || !selMed.value || !selFecha.value) {
-            chips.innerHTML = `<p>Elige especialidad, médico y fecha.</p>`;
+        if (!selEsp.value || !selMed.value) {
+            chips.innerHTML = `<p>Elige especialidad y médico.</p>`;
+            if (calendar) calendar.removeAllEvents();
             return;
         }
 
@@ -61,8 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const resAgenda = await fetch(`/paciente/agendas?${params.toString()}`, { credentials: "include" });
         const agendas = await resAgenda.json();
+        console.log("[reserva] agendas", agendas);
         if (!agendas.length) {
             chips.innerHTML = `<p>No hay agenda configurada para ese profesional.</p>`;
+            if (calendar) calendar.removeAllEvents();
             return;
         }
         agendaIdActual = agendas[0].id;
@@ -70,44 +85,88 @@ document.addEventListener("DOMContentLoaded", () => {
         // Traer horarios libres de la agenda
         const resHor = await fetch(`/paciente/horarios-libres/${agendaIdActual}`, { credentials: "include" });
         const horarios = await resHor.json();
+        console.log("[reserva] horarios libres agenda", agendaIdActual, horarios);
+        horariosActuales = horarios.map(h => {
+            const fechaISO = (h.fecha || "").substring(0, 10);
+            const rawHora = (h.hora || h.horaInicio || "").substring(0, 5);
+            const horaFmt = rawHora.length >= 5 ? rawHora.slice(0, 5) : rawHora;
+            return { ...h, fechaISO, horaFmt };
+        });
 
-        // Filtrar por fecha seleccionada
-        const fechaSel = selFecha.value;
-        const list = horarios.filter(h => h.fecha === fechaSel);
-
-        if (!list.length) {
-            chips.innerHTML = `<p>No hay horarios libres para esa fecha.</p>`;
-            return;
+        // Pintar en el calendar
+        if (calendar) {
+            calendar.removeAllEvents();
+            const events = horariosActuales.map(h => {
+                const start = `${h.fechaISO}T${h.horaFmt}:00-03:00`;
+                return {
+                    id: String(h.id),
+                    title: h.horaFmt,
+                    start
+                };
+            });
+            console.log("[reserva] eventos calendar", events);
+            calendar.addEventSource(events);
         }
 
-        chips.innerHTML = "";
-        list.forEach(h => {
-            const c = document.createElement("div");
-            c.classList.add("chip");
-            c.textContent = h.horaInicio;
-            c.addEventListener("click", () => {
-                horarioSeleccionado = h.id;
-                chips.querySelectorAll(".chip").forEach(ch => ch.classList.remove("selected"));
-                c.classList.add("selected");
-            });
-            chips.appendChild(c);
-        });
+        chips.innerHTML = `<p>Elige una fecha en el calendario.</p>`;
     }
 
     selEsp?.addEventListener("change", async () => {
         await cargarMedicos(selEsp.value);
+        agendaIdActual = null;
+        horariosActuales = [];
+        if (calendar) calendar.removeAllEvents();
         chips.innerHTML = `<p>Elige médico y fecha.</p>`;
     });
 
     selMed?.addEventListener("change", () => {
         chips.innerHTML = `<p>Elige fecha.</p>`;
+        cargarHorarios();
     });
 
-    selFecha?.addEventListener("change", cargarHorarios);
+    // Inicializar calendario FullCalendar
+    if (calendarEl) {
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: "dayGridMonth",
+            height: "auto",
+            selectable: true,
+            headerToolbar: {
+                left: "prev,next",
+                center: "title",
+                right: ""
+            },
+            locale: "es",
+            dateClick: (info) => {
+                const fechaSel = info.dateStr;
+                const list = horariosActuales.filter(h => h.fechaISO === fechaSel);
+                console.log("[reserva] click fecha", fechaSel, "match", list);
+                chips.innerHTML = "";
+                horarioSeleccionado = null;
+
+                if (!list.length) {
+                    chips.innerHTML = `<p>No hay horarios libres para esa fecha.</p>`;
+                    return;
+                }
+
+                list.forEach(h => {
+                    const c = document.createElement("div");
+                    c.classList.add("chip-item");
+                    c.textContent = h.horaFmt || h.hora || h.horaInicio || "";
+                    c.addEventListener("click", () => {
+                        horarioSeleccionado = h.id;
+                        chips.querySelectorAll(".chip-item").forEach(ch => ch.classList.remove("chip-selected"));
+                        c.classList.add("chip-selected");
+                    });
+                    chips.appendChild(c);
+                });
+            }
+        });
+        calendar.render();
+    }
 
     btn?.addEventListener("click", async () => {
-        if (!selEsp.value || !selMed.value || !selFecha.value || !horarioSeleccionado || !agendaIdActual) {
-            alert("Selecciona especialidad, médico, fecha y horario.");
+        if (!selEsp.value || !selMed.value || !horarioSeleccionado || !agendaIdActual) {
+            alert("Selecciona especialidad, médico y horario.");
             return;
         }
 
@@ -118,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
             horarioAgendaId: Number(horarioSeleccionado),
             motivo: "Reserva web",
             tipoTurno: "normal",
-            fecha: selFecha.value
+            fecha: "" // no usado en normal con horario
         };
 
         const res = await fetch("/paciente/reserva", {

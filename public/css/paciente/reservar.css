@@ -1,136 +1,243 @@
+/* ============================
+   FONDO GENERAL
+   ============================ */
 .res-bg {
+    padding: 40px 20px;
     min-height: 100vh;
-    background: #f5f9ff;
-    padding: 24px 16px 36px;
+    background: #f7fbff;
+    font-family: "Inter", sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    color: #1d3557;
 }
 
+/* ============================
+   HEADER
+   ============================ */
 .res-header {
     width: 100%;
-    max-width: 420px;
+    max-width: 900px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 16px 18px;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(0,80,180,0.10);
-    border: 1px solid rgba(0,120,255,0.08);
+    margin-bottom: 35px;
 }
 
 .res-header .label {
+    font-size: 15px;
+    color: #5a7ca8;
     margin: 0;
-    color: #3b5d87;
-    font-size: 13px;
 }
 
 .res-header h1 {
-    margin: 2px 0 6px 0;
-    font-size: 22px;
-    color: #0c3c77;
+    font-size: 30px;
+    margin: 5px 0 0;
+    font-weight: 600;
 }
 
-.res-header .subtitle {
-    margin: 0;
-    color: #3b5d87;
+.subtitle {
+    margin: 5px 0 0;
+    color: #5276a3;
     font-size: 14px;
 }
 
+/* Botón Inicio */
 .btn-home {
+    background: #ffffff;
+    padding: 10px 18px;
+    border-radius: 15px;
     text-decoration: none;
-    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
-    color: #fff;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-weight: 700;
-    box-shadow: 0 8px 20px rgba(10, 90, 216, 0.28);
+    color: #1d3557;
+    font-size: 16px;
+    border: 1px solid #dfe9f7;
+
+    box-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.08),
+        -4px -4px 12px rgba(255, 255, 255, 0.95);
+    transition: 0.15s ease;
 }
 
+.btn-home:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        7px 7px 20px rgba(0, 0, 0, 0.12),
+        -7px -7px 20px rgba(255, 255, 255, 0.95);
+}
+
+/* ============================
+   TARJETA PRINCIPAL
+   ============================ */
 .res-card {
+    background: #e9f2ff;
     width: 100%;
-    max-width: 420px;
-    background: #fff;
-    border-radius: 18px;
-    padding: 18px 16px 20px;
-    box-shadow: 0 12px 24px rgba(0,80,180,0.12);
-    border: 1px solid rgba(0,120,255,0.06);
-    color: #0c3c77;
+    max-width: 900px;
+    border-radius: 25px;
+    padding: 30px;
+    border: 1px solid #e3eefc;
+
+    box-shadow:
+        8px 8px 20px rgba(0, 0, 0, 0.08),
+        -8px -8px 20px rgba(255, 255, 255, 0.92);
+
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 25px;
 }
 
+/* ============================
+   CAMPOS DE FORMULARIO
+   ============================ */
 .form-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
 }
 
 .field label {
-    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1d3557;
     margin-bottom: 6px;
-    color: #0c3c77;
-    font-weight: 700;
-    font-size: 14px;
+    display: block;
 }
 
-.field select,
-.field input[type="date"] {
+.field select {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid #d7e7ff;
-    background: #f7fbff;
-    font-size: 14px;
-    color: #0c3c77;
+    padding: 12px 16px;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 1px solid #d9e6f8;
+    background: #ffffff;
+    color: #1d3557;
+
+    box-shadow:
+        inset 3px 3px 8px rgba(0, 0, 0, 0.05),
+        inset -3px -3px 8px rgba(255, 255, 255, 1);
+}
+
+.field select:focus {
     outline: none;
+    border-color: #69a7ff;
 }
 
-.field input[type="date"] {
-    padding: 12px 14px;
+/* ============================
+   CALENDARIO (FullCalendar)
+   ============================ */
+.fecha-field #calendar {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #e3eefc;
+
+    box-shadow:
+        inset 4px 4px 12px rgba(0, 0, 0, 0.04),
+        inset -4px -4px 12px rgba(255, 255, 255, 1);
 }
 
+.fc .fc-toolbar-title {
+    font-size: 18px;
+    color: #1d3557;
+}
+
+.fc .fc-button-primary {
+    background: #eaf3ff !important;
+    border: none !important;
+    color: #1d3557 !important;
+    font-weight: 600;
+    border-radius: 10px !important;
+    box-shadow:
+        3px 3px 7px rgba(0, 0, 0, 0.08),
+        -3px -3px 7px rgba(255, 255, 255, 0.95);
+}
+
+.fc .fc-button-primary:hover {
+    background: #d9eaff !important;
+}
+
+/* Ocultar eventos dentro del calendario (solo usamos chips) */
+#calendar .fc-daygrid-day-events,
+#calendar .fc-daygrid-event-harness,
+#calendar .fc-daygrid-event,
+#calendar .fc-daygrid-dot-event,
+#calendar .fc-event {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* ============================
+   HORARIOS (CHIPS)
+   ============================ */
 .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px;
 }
 
-.chip {
-    padding: 10px 12px;
-    background: #e9f3ff;
-    color: #0a5ad8;
-    border-radius: 12px;
-    font-weight: 700;
+.chip-item {
+    padding: 10px 16px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 15px;
     cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid #dbe7f8;
+
+    box-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.07),
+        -4px -4px 12px rgba(255, 255, 255, 0.95);
+
+    transition: 0.15s ease;
 }
 
-.chip.selected {
-    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(10, 90, 216, 0.25);
+.chip-item:hover {
+    transform: translateY(-3px);
 }
 
+.chip-selected {
+    background: #e2efff;
+    border-color: #69a7ff;
+}
+
+/* ============================
+   BOTÓN RESERVAR
+   ============================ */
 .btn-reservar {
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
-    color: white;
+    padding: 15px;
+    background: linear-gradient(180deg, #3fa9ff, #1d7ce2);
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 18px;
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 10px 24px rgba(10, 90, 216, 0.3);
+
+    box-shadow:
+        5px 5px 15px rgba(0, 0, 0, 0.12),
+        -5px -5px 15px rgba(255, 255, 255, 0.85);
+
+    transition: 0.15s ease;
+}
+
+.btn-reservar:hover {
+    transform: translateY(-3px);
 }
 
 .nota {
     text-align: center;
-    color: #3b5d87;
-    font-size: 13px;
     margin: 0;
+    font-size: 14px;
+    color: #5b7ea3;
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 }
