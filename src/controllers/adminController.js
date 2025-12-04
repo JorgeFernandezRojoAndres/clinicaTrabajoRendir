@@ -144,7 +144,7 @@ const AdminController = {
                     JOIN HORARIO_AGENDA ha ON ha.id = t.horarioAgendaId
                     WHERE (? IS NULL OR ha.fechaHora >= ?)
                     AND   (? IS NULL OR ha.fechaHora <= ?)
-                    GROUP BY DATE(ha.fechaHora)
+                    GROUP BY fecha
                     ORDER BY fecha ASC
                 `, [fDesde, fDesde, fHasta, fHasta]);
                 rows = r;
@@ -161,6 +161,23 @@ const AdminController = {
                 `, [fDesde, fDesde, fHasta, fHasta]);
                 rows = r;
                 csv += "profesional,total\n" + rows.map(x => `${x.profesional},${x.total}`).join("\n");
+            } else if (tipo === "atenciones") {
+                const [r] = await db.query(`
+                    SELECT 
+                        DATE_FORMAT(a.fecha, '%Y-%m-%d %H:%i') AS fecha,
+                        p.nombreCompleto AS paciente,
+                        pr.nombre AS profesional,
+                        COALESCE(a.motivo, '') AS motivo
+                    FROM ATENCION a
+                    LEFT JOIN TURNO t ON t.id = a.turnoId
+                    LEFT JOIN PACIENTE p ON p.id = t.pacienteId
+                    LEFT JOIN PROFESIONAL pr ON pr.id = a.profesionalId
+                    WHERE (? IS NULL OR a.fecha >= ?)
+                    AND   (? IS NULL OR a.fecha <= ?)
+                    ORDER BY a.fecha DESC
+                `, [fDesde, fDesde, fHasta, fHasta]);
+                rows = r;
+                csv += "fecha,paciente,profesional,motivo\n" + rows.map(x => `${x.fecha},${x.paciente || ""},${x.profesional || ""},"${(x.motivo || "").replace(/"/g, '""')}"`).join("\n");
             } else {
                 return res.status(400).json({ ok: false, error: "Tipo de reporte no soportado" });
             }

@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 contenedor.innerHTML = renderTabla(data.rows, ["fecha", "total"]);
             } else if (tipo === "consultas-profesional") {
                 contenedor.innerHTML = renderTabla(data.rows, ["profesional", "total"]);
+            } else if (tipo === "atenciones") {
+                contenedor.innerHTML = renderTabla(data.rows, ["fecha", "paciente", "profesional", "motivo"]);
             } else {
                 contenedor.innerHTML = "<p>Tipo de reporte no soportado.</p>";
             }

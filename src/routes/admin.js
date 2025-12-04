@@ -65,6 +65,11 @@ router.get("/reportes", requireRole("admin"), (req, res) => {
 // API Reportes
 router.get("/reportes-data", requireRole("admin"), AdminController.generarReporte);
 
+// Configuración
+router.get("/configuracion", requireRole("admin"), (req, res) => {
+    res.sendFile(path.join(viewsPath, "configuracion.html"));
+});
+
 // =======================================================
 // 📌 NUEVA VISTA: Pacientes pendientes de aprobación
 // =======================================================
