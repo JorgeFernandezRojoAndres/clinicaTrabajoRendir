@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Turno</title>
+    <link rel="stylesheet" href="/css/paciente/paciente.css">
+    <link rel="stylesheet" href="/css/paciente/reservar.css">
+</head>
+<body>
+    <div class="res-bg">
+        <header class="res-header">
+            <div>
+                <p class="label">Paciente</p>
+                <h1 id="pac-nombre-reserva">Reserva tu turno</h1>
+                <p class="subtitle">Selecciona especialidad, médico, fecha y un horario disponible.</p>
+            </div>
+            <a class="btn-home" href="/pac-panel">🏠 Inicio</a>
+        </header>
+
+        <section class="res-card">
+            <div class="form-grid">
+                <div class="field">
+                    <label>Especialidad</label>
+                    <select id="sel-especialidad">
+                        <option value="">Seleccionar especialidad</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Médico</label>
+                    <select id="sel-medico">
+                        <option value="">Seleccionar médico</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field fecha-field">
+                <label>Fecha</label>
+                <input type="date" id="sel-fecha">
+            </div>
+
+            <div class="field">
+                <label>Horarios disponibles</label>
+                <div class="chips" id="chips-horarios">
+                    <!-- chips de horarios -->
+                </div>
+            </div>
+
+            <button id="btn-reservar" class="btn-reservar">Reservar</button>
+            <p class="nota">Las reservas quedan pendientes de confirmación</p>
+        </section>
+    </div>
+    <script src="/js/paciente/reservar.js"></script>
+</body>
+</html>

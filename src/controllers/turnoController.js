@@ -51,11 +51,16 @@ const TurnoController = {
                 medicoId,
                 agendaId,
                 horarioAgendaId,
-                pacienteId,
+                pacienteId: pacienteIdBody,
                 motivo,
                 tipoTurno,
                 fecha
             } = req.body;
+
+            // Forzar paciente logueado si el rol es paciente
+            const pacienteId = req.session?.user?.tipo === "paciente"
+                ? req.session.user.id
+                : pacienteIdBody;
 
             // ================================
             // VALIDACIÓN GENERAL

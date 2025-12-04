@@ -1,0 +1,136 @@
+.res-bg {
+    min-height: 100vh;
+    background: #f5f9ff;
+    padding: 24px 16px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.res-header {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,80,180,0.10);
+    border: 1px solid rgba(0,120,255,0.08);
+}
+
+.res-header .label {
+    margin: 0;
+    color: #3b5d87;
+    font-size: 13px;
+}
+
+.res-header h1 {
+    margin: 2px 0 6px 0;
+    font-size: 22px;
+    color: #0c3c77;
+}
+
+.res-header .subtitle {
+    margin: 0;
+    color: #3b5d87;
+    font-size: 14px;
+}
+
+.btn-home {
+    text-decoration: none;
+    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(10, 90, 216, 0.28);
+}
+
+.res-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 16px 20px;
+    box-shadow: 0 12px 24px rgba(0,80,180,0.12);
+    border: 1px solid rgba(0,120,255,0.06);
+    color: #0c3c77;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #0c3c77;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.field select,
+.field input[type="date"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #d7e7ff;
+    background: #f7fbff;
+    font-size: 14px;
+    color: #0c3c77;
+    outline: none;
+}
+
+.field input[type="date"] {
+    padding: 12px 14px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    padding: 10px 12px;
+    background: #e9f3ff;
+    color: #0a5ad8;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.chip.selected {
+    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(10, 90, 216, 0.25);
+}
+
+.btn-reservar {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #0a7bff, #0a5ad8);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(10, 90, 216, 0.3);
+}
+
+.nota {
+    text-align: center;
+    color: #3b5d87;
+    font-size: 13px;
+    margin: 0;
+}

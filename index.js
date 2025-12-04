@@ -28,6 +28,9 @@ import proHistoriaRoutes from "./src/routes/pro-historia.js";
 import TurnoController from "./src/controllers/turnoController.js";
 import proPanelRoutes from "./src/routes/pro-panel.js";
 import PacienteController from "./src/controllers/pacienteController.js";
+import EspecialidadController from "./src/controllers/especialidadController.js";
+import ProfesionalController from "./src/controllers/profesionalController.js";
+import AgendaController from "./src/controllers/agendaController.js";
 
 // Necesario en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -112,6 +115,12 @@ app.get("/pacientes/registro", (req, res) => {
     res.sendFile(path.join(__dirname, "views/paciente/registro.html"));
 });
 app.post("/pacientes/registro", PacienteController.create);
+// Endpoints públicos para paciente (sesión paciente)
+app.get("/paciente/especialidades", requireRole("paciente"), EspecialidadController.listar);
+app.get("/paciente/especialidades/:id/medicos", requireRole("paciente"), ProfesionalController.medicosPorEspecialidad);
+app.get("/paciente/agendas", requireRole("paciente"), AgendaController.buscar);
+app.get("/paciente/horarios-libres/:id", requireRole("paciente"), AgendaController.horariosLibres);
+app.post("/paciente/reserva", requireRole("paciente"), TurnoController.crearDesdeCalendario);
 // 🔹 Pacientes → Solo SECRETARIA
 app.use("/pacientes", requireRoles(["secretaria", "admin"]), pacientesRoutes);
 
@@ -168,6 +177,9 @@ app.get("/pac-panel", requireRole("paciente"), (req, res) => {
 });
 app.get("/pac-panel/turnos", requireRole("paciente"), (req, res) => {
     res.sendFile(path.join(__dirname, "views/paciente/misTurnos.html"));
+});
+app.get("/paciente/reservar", requireRole("paciente"), (req, res) => {
+    res.sendFile(path.join(__dirname, "views/paciente/reservar.html"));
 });
 // Datos del paciente logueado
 app.get("/paciente/datos", requireRole("paciente"), PacienteController.getMe);
