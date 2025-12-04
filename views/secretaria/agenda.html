@@ -78,32 +78,76 @@
 
     </main>
 
-    <!-- Menú lateral móvil -->
+    <!-- Menú compacto tipo admin -->
     <nav id="navMenu" class="nav-menu hidden">
-        <ul>
-            <li><a href="/sec-panel">Inicio</a></li>
-            <li><a href="/auth/logout">Cerrar sesión</a></li>
-        </ul>
+        <button onclick="history.back()" class="nav-btn" aria-label="Atrás">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-left-dash">
+                <path d="M13 9a1 1 0 0 1-1-1V5.061a1 1 0 0 0-1.811-.75l-6.835 6.836a1.207 1.207 0 0 0 0 1.707l6.835 6.835a1 1 0 0 0 1.811-.75V16a1 1 0 0 1 1-1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"/>
+                <path d="M20 9v6"/>
+            </svg>
+        </button>
+        <button onclick="history.forward()" class="nav-btn" aria-label="Adelante">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash">
+                <path d="M11 9a1 1 0 0 0 1-1V5.061a1 1 0 0 1 1.811-.75l6.836 6.836a1.207 1.207 0 0 1 0 1.707l-6.836 6.835a1 1 0 0 1-1.811-.75V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/>
+                <path d="M4 9v6"/>
+            </svg>
+        </button>
+        <button onclick="window.location.href='/secretaria/registrar-paciente'" class="nav-btn" aria-label="Registrar paciente">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-form">
+                <path d="M4 14h6"/>
+                <path d="M4 2h10"/>
+                <rect x="4" y="18" width="16" height="4" rx="1"/>
+                <rect x="4" y="6" width="16" height="4" rx="1"/>
+            </svg>
+        </button>
+        <button onclick="window.location.href='/auth/logout'" class="nav-btn" aria-label="Cerrar sesión">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-door-open">
+                <path d="M11 20H2"/>
+                <path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z"/>
+                <path d="M11 4H8a2 2 0 0 0-2 2v14"/>
+                <path d="M14 12h.01"/>
+                <path d="M22 20h-3"/>
+            </svg>
+        </button>
     </nav>
     <style>
         .nav-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 220px;
-            height: 100%;
-            background: #0d2a4a;
-            color: #fff;
-            padding: 20px;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 9999;
+            position: absolute;
+            top: 62px;
+            left: 20px;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0,0,70,0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 99999;
+            width: 160px;
+
+            /* Animación (igual que Admin) */
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.22s ease, transform 0.22s ease;
         }
-        .nav-menu ul { list-style: none; padding: 0; margin: 0; }
-        .nav-menu li { margin: 12px 0; }
-        .nav-menu a { color: #fff; text-decoration: none; font-weight: 600; }
-        .nav-menu.show { transform: translateX(0); }
-        .nav-menu.hidden { display: block; } /* se usa solo para estado inicial */
+        /* Estado oculto con transición */
+        .nav-menu.hidden {
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+        }
+        .nav-btn {
+            background: #eef4ff;
+            color: #0a3d8f;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .nav-btn:hover {
+            background: #dbe7ff;
+        }
     </style>
 
   
@@ -189,17 +233,18 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuBtn = document.querySelector(".menu-btn");
-            const navMenu = document.getElementById("navMenu");
-            if (menuBtn && navMenu) {
-                menuBtn.addEventListener("click", () => {
-                    navMenu.classList.toggle("show");
-                });
-            }
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.querySelector(".menu-btn");
+    const navMenu = document.getElementById("navMenu");
+
+    if (menuBtn && navMenu) {
+        menuBtn.addEventListener("click", () => {
+            navMenu.classList.toggle("hidden");
         });
-    </script>
+    }
+});
+</script>
 
 </body>
 
-</html>
+</html> 

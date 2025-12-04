@@ -13,27 +13,44 @@ const Paciente = {
     },
 
     async create(data) {
-        const { nombreCompleto, dni, obraSocial, contacto, fotoDniUrl } = data;
+        const {
+            nombreCompleto,
+            fechaNacimiento = null,
+            genero = null,
+            dni,
+            obraSocial,
+            contacto,
+            fotoDniUrl
+        } = data;
 
-        // 🔥 NUEVO: estado = 'pendiente' por defecto
         const estado = "pendiente";
 
         const [result] = await db.query(
             `INSERT INTO PACIENTE 
-                (nombreCompleto, dni, obraSocial, contacto, fotoDniUrl, estado) 
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [nombreCompleto, dni, obraSocial, contacto, fotoDniUrl, estado]
+                (nombreCompleto, fechaNacimiento, genero, dni, obraSocial, contacto, fotoDniUrl, estado) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [nombreCompleto, fechaNacimiento, genero, dni, obraSocial, contacto, fotoDniUrl, estado]
         );
 
         return result.insertId;
     },
 
     async update(id, data) {
-        const { nombreCompleto, dni, obraSocial, contacto, fotoDniUrl } = data;
+        const {
+            nombreCompleto,
+            fechaNacimiento = null,
+            genero = null,
+            dni,
+            obraSocial,
+            contacto,
+            fotoDniUrl
+        } = data;
 
         await db.query(
-            "UPDATE PACIENTE SET nombreCompleto = ?, dni = ?, obraSocial = ?, contacto = ?, fotoDniUrl = ? WHERE id = ?",
-            [nombreCompleto, dni, obraSocial, contacto, fotoDniUrl, id]
+            `UPDATE PACIENTE 
+             SET nombreCompleto = ?, fechaNacimiento = ?, genero = ?, dni = ?, obraSocial = ?, contacto = ?, fotoDniUrl = ? 
+             WHERE id = ?`,
+            [nombreCompleto, fechaNacimiento, genero, dni, obraSocial, contacto, fotoDniUrl, id]
         );
         return true;
     },

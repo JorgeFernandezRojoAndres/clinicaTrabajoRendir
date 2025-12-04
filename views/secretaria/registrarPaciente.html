@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Paciente - Secretaría</title>
-    <link rel="stylesheet" href="/css/secretaria.css">
+    <link rel="stylesheet" href="/css/secretaria/secretaria.css">
+
     <link rel="stylesheet" href="/css/secretaria/registrarPaciente.css">
 </head>
 
@@ -30,18 +32,27 @@
 
         <h2>Datos del Paciente</h2>
 
-        <form class="registro-form" id="formRegistrarPaciente">
+        <!-- Buscar por DNI -->
+        <div class="registro-buscar">
+            <label for="buscarDni">Buscar paciente por DNI</label>
+            <div class="buscar-row">
+                <input type="text" id="buscarDni" placeholder="Ej: 30123456">
+                <button class="btn-guardar" id="btnBuscarDni">Buscar</button>
+            </div>
+        </div>
+
+        <form class="registro-form" id="formRegistrarPaciente" novalidate>
 
             <!-- Nombre -->
             <div class="field">
                 <label>Nombre Completo</label>
-                <input type="text" name="nombre" required>
+                <input type="text" name="nombre" data-required="true">
             </div>
 
             <!-- DNI -->
             <div class="field">
                 <label>DNI</label>
-                <input type="number" name="dni" required>
+                <input type="number" name="dni" data-required="true">
             </div>
 
             <!-- Email -->
@@ -61,9 +72,9 @@
                 <label>Género</label>
                 <select name="genero">
                     <option value="">Seleccione…</option>
-                    <option value="F">Femenino</option>
-                    <option value="M">Masculino</option>
-                    <option value="O">Otro</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Otro">Otro</option>
                 </select>
             </div>
 
@@ -89,18 +100,201 @@
 
         <!-- BOTONES -->
         <div class="registro-actions">
-            <button class="btn-limpiar" type="reset" onclick="document.getElementById('formRegistrarPaciente').reset();">
+            <button class="btn-limpiar" type="reset"
+                onclick="document.getElementById('formRegistrarPaciente').reset();">
                 LIMPIAR
             </button>
 
-            <button class="btn-guardar" onclick="registrarPaciente()">
+            <button class="btn-guardar" type="submit" form="formRegistrarPaciente">
                 GUARDAR
             </button>
         </div>
 
     </main>
 
-    <script src="/js/secretaria.js"></script>
+    <!-- Menú compacto tipo admin -->
+    <nav id="navMenu" class="nav-menu hidden">
+        <button onclick="history.back()" class="nav-btn" aria-label="Atrás">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-left-dash">
+                <path d="M13 9a1 1 0 0 1-1-1V5.061a1 1 0 0 0-1.811-.75l-6.835 6.836a1.207 1.207 0 0 0 0 1.707l6.835 6.835a1 1 0 0 0 1.811-.75V16a1 1 0 0 1 1-1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"/>
+                <path d="M20 9v6"/>
+            </svg>
+        </button>
+        <button onclick="history.forward()" class="nav-btn" aria-label="Adelante">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash">
+                <path d="M11 9a1 1 0 0 0 1-1V5.061a1 1 0 0 1 1.811-.75l6.836 6.836a1.207 1.207 0 0 1 0 1.707l-6.836 6.835a1 1 0 0 1-1.811-.75V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/>
+                <path d="M4 9v6"/>
+            </svg>
+        </button>
+        <button onclick="window.location.href='/auth/logout'" class="nav-btn" aria-label="Cerrar sesión">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-door-open">
+                <path d="M11 20H2"/>
+                <path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z"/>
+                <path d="M11 4H8a2 2 0 0 0-2 2v14"/>
+                <path d="M14 12h.01"/>
+                <path d="M22 20h-3"/>
+            </svg>
+        </button>
+    </nav>
+    <style>
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            left: 14px;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0,0,70,0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 99999;
+            width: 160px;
+
+            /* Animación (igual que Admin) */
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+        /* Estado oculto con transición */
+        .nav-menu.hidden {
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+        }
+        .nav-btn {
+            background: #0d2a4a;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .nav-btn:hover {
+            background: #164a7e;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/validaciones.js"></script>
+    <script src="/js/secretaria/secretaria.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("formRegistrarPaciente");
+            const menuBtn = document.querySelector(".menu-btn");
+            const navMenu = document.getElementById("navMenu");
+            const btnBuscarDni = document.getElementById("btnBuscarDni");
+            const inputBuscarDni = document.getElementById("buscarDni");
+            let pacienteIdEncontrado = null;
+
+            if (menuBtn && navMenu) {
+                menuBtn.addEventListener("click", () => {
+                    navMenu.classList.toggle("hidden");
+                });
+            }
+
+            // Buscar por DNI contra /pacientes y autocompletar si existe
+            btnBuscarDni?.addEventListener("click", async () => {
+                const dniBuscado = inputBuscarDni?.value?.trim();
+                if (!dniBuscado) {
+                    Swal.fire({ icon: "info", title: "Ingresá un DNI" });
+                    return;
+                }
+                try {
+                    const resp = await fetch("/pacientes", { credentials: "include" });
+                    if (!resp.ok) throw new Error("No se pudo buscar pacientes");
+                    const lista = await resp.json();
+                    const encontrado = (lista || []).find(p => String(p.dni) === dniBuscado);
+                    if (!encontrado) {
+                        pacienteIdEncontrado = null;
+                        Swal.fire({
+                            icon: "warning",
+                            title: "No encontrado",
+                            text: "No existe paciente con ese DNI. Podés registrar uno nuevo."
+                        });
+                        // Prellenar el DNI para el alta
+                        form.querySelector('input[name="dni"]').value = dniBuscado;
+                        return;
+                    }
+                    pacienteIdEncontrado = encontrado.id;
+                    // Completar campos con datos existentes
+                    form.querySelector('input[name="nombre"]').value = encontrado.nombreCompleto || "";
+                    form.querySelector('input[name="dni"]').value = encontrado.dni || "";
+                    form.querySelector('input[name="email"]').value = encontrado.contacto || "";
+                    form.querySelector('input[name="telefono"]').value = encontrado.telefono || "";
+                    form.querySelector('select[name="genero"]').value = encontrado.genero || "";
+                    form.querySelector('input[name="fecha_nacimiento"]').value = encontrado.fechaNacimiento ? encontrado.fechaNacimiento.substring(0,10) : "";
+                    form.querySelector('input[name="obra_social"]').value = encontrado.obraSocial || "";
+                    form.querySelector('input[name="direccion"]').value = encontrado.direccion || "";
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Paciente encontrado",
+                        text: "Datos cargados para actualizar."
+                    });
+                } catch (err) {
+                    console.error("Error buscando paciente por DNI:", err);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "No se pudo buscar el paciente. Intenta nuevamente."
+                    });
+                }
+            });
+
+            if (form) {
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    if (typeof validarFormulario === "function") {
+                        const ok = validarFormulario(form);
+                        if (!ok) return;
+                    }
+
+                    const fd = new FormData(form);
+                    const payload = {
+                        nombreCompleto: (fd.get("nombre") || "").trim(),
+                        dni: (fd.get("dni") || "").trim(),
+                        obraSocial: (fd.get("obra_social") || "").trim(),
+                        contacto: (fd.get("email") || fd.get("telefono") || "").trim(),
+                        fechaNacimiento: (fd.get("fecha_nacimiento") || "").trim() || null,
+                        genero: (fd.get("genero") || "").trim() || null,
+                        fotoDniUrl: ""
+                    };
+
+                    const url = pacienteIdEncontrado ? `/pacientes/${pacienteIdEncontrado}` : "/pacientes";
+                    const method = pacienteIdEncontrado ? "PUT" : "POST";
+
+                    try {
+                        const resp = await fetch(url, {
+                            method,
+                            headers: { "Content-Type": "application/json" },
+                            credentials: "include",
+                            body: JSON.stringify(payload)
+                        });
+                        const data = await resp.json().catch(() => ({}));
+                        if (!resp.ok || data.ok === false) throw new Error(data.error || "No se pudo guardar");
+
+                        Swal.fire({
+                            icon: "success",
+                            title: "Guardado",
+                            text: pacienteIdEncontrado ? "Paciente actualizado." : "Paciente registrado."
+                        });
+                        form.reset();
+                        pacienteIdEncontrado = null;
+                    } catch (err) {
+                        console.error("Error guardando paciente:", err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: err.message || "No se pudo guardar el paciente."
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
+
 </html>

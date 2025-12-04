@@ -1,124 +1,117 @@
-/* ---------------------------------------------------
-   REGISTRO DE PACIENTE — Secretaría
---------------------------------------------------- */
+/* ================================================
+   FORMULARIO - REGISTRAR PACIENTE
+   (Compatible con el estilo actual de Secretaría)
+================================================ */
 
 .registro-container {
     max-width: 900px;
-    margin: 35px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 15px;
-    border: 1px solid #e1e9fb;
-    box-shadow: 0 4px 12px rgba(0, 0, 60, 0.08);
+    margin: 20px auto;
+    padding: 10px;
 }
 
-/* Título */
-.registro-container h2 {
-    font-size: 22px;
+.registro-container > h2 {
+    font-size: 20px;
     font-weight: 700;
-    color: #0a3d8f;
-    margin-bottom: 20px;
-    border-left: 4px solid #0a6cff;
-    padding-left: 10px;
+    margin-bottom: 18px;
+    color: #183153;
 }
 
-/* Formulario */
+/* Caja del formulario */
 .registro-form {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 18px;
 }
 
-.registro-form .field label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 4px;
-    display: block;
-}
-
-.registro-form .field input,
-.registro-form .field select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #d4def4;
-    background: #f7faff;
-    font-size: 14px;
-}
-
-.registro-form .field input:focus,
-.registro-form .field select:focus {
-    border-color: #0a6cff;
-    box-shadow: 0 0 0 2px rgba(10, 108, 255, 0.2);
-}
-
-/* Campo grande (Dirección, Email, etc.) */
 .col-span-2 {
     grid-column: span 2;
 }
 
-/* ----------------------------
+/* Campos */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #183153;
+}
+
+/* Inputs */
+.field input,
+.field select {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #d7e2f3;
+    background: #f8fbff;
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: #3b82f6;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
+}
+
+.field input::placeholder {
+    color: #9caec9;
+}
+
+/* Errores de validación personalizados */
+.field input.input-error,
+.field select.input-error {
+    border-color: #e63946;
+    background: #fff4f4;
+}
+
+/* ===========================================
    BOTONES
----------------------------- */
+=========================================== */
 
 .registro-actions {
-    margin-top: 25px;
+    margin-top: 22px;
     display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-.btn-guardar {
-    padding: 12px 28px;
-    border-radius: 10px;
-    background: #0a6cff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 80, 255, 0.25);
-    transition: 0.15s ease;
-}
-
-.btn-guardar:hover {
-    background: #0059d6;
+    gap: 14px;
 }
 
 .btn-limpiar {
-    padding: 12px 28px;
-    border-radius: 10px;
-    background: #777;
-    color: white;
-    border: none;
+    background: #eef5ff;
+    border: 1px solid #cfd9ee;
+    padding: 12px 24px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 15px;
     font-weight: 600;
+    color: #1a2b4c;
+    transition: .2s ease;
 }
 
 .btn-limpiar:hover {
-    background: #555;
+    background: #dceaff;
 }
 
-/* ----------------------------
-   RESPONSIVE
----------------------------- */
+.btn-guardar {
+    background: #007bff;
+    background: linear-gradient(135deg, #1d8cff, #006be6);
+    border: none;
+    padding: 12px 26px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #ffffff;
+    transition: .2s ease;
+}
 
-@media (max-width: 780px) {
-    .registro-form {
-        grid-template-columns: 1fr;
-    }
-
-    .col-span-2 {
-        grid-column: span 1 !important;
-    }
-
-    .registro-actions {
-        flex-direction: column;
-    }
-
-    .registro-actions button {
-        width: 100%;
-    }
+.btn-guardar:hover {
+    background: linear-gradient(135deg, #006be6, #005bcc);
 }

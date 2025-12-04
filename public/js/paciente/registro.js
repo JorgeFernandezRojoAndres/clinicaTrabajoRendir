@@ -5,6 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
+        if (typeof validarFormulario === "function") {
+            const ok = validarFormulario(form);
+            if (!ok) return;
+        }
+
         const nombreCompleto = document.getElementById("nombreCompleto")?.value.trim();
         const dni = document.getElementById("dni")?.value.trim();
         const correo = document.getElementById("correo")?.value.trim();
@@ -12,11 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const fotoInput = document.getElementById("fotoDni");
 
         console.log("[registro paciente] submit", { nombreCompleto, dni, correo, obraSocial });
-
-        if (!nombreCompleto || !dni || !correo || !obraSocial) {
-            alert("Completa los campos obligatorios");
-            return;
-        }
 
         // Por ahora solo guardamos la URL del DNI vacía (no hay upload en este flujo)
         const payload = {
@@ -38,15 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("[registro paciente] respuesta", data);
 
             if (!resp.ok || data.ok === false) {
-                alert(data.error || "No se pudo registrar el paciente");
+                await Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: data.error || "No se pudo registrar el paciente"
+                });
                 return;
             }
 
-            alert("Registro enviado. Queda pendiente de validación.");
+            await Swal.fire({
+                icon: "success",
+                title: "Registro enviado",
+                text: "Queda pendiente de validación."
+            });
             window.location.href = "/login";
         } catch (err) {
             console.error("Error registrando paciente:", err);
-            alert("Error al registrar. Intenta nuevamente.");
+            Swal.fire({
+                icon: "error",
+                title: "Error al registrar",
+                text: "Intenta nuevamente."
+            });
         }
     });
 });

@@ -9,7 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("formEspecialidad");
     if (form) {
-        form.addEventListener("submit", crearEspecialidad);
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (typeof validarFormulario === "function") {
+                const ok = validarFormulario(form);
+                if (!ok) return;
+            }
+            crearEspecialidad(e);
+        });
     }
 });
 

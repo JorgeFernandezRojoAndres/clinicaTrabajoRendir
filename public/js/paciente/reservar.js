@@ -96,13 +96,19 @@ document.addEventListener("DOMContentLoaded", () => {
         // Pintar en el calendar
         if (calendar) {
             calendar.removeAllEvents();
-            const events = horariosActuales.map(h => {
-                const start = `${h.fechaISO}T${h.horaFmt}:00-03:00`;
-                return {
-                    id: String(h.id),
-                    title: h.horaFmt,
-                    start
-                };
+            // Solo marcamos los días con disponibilidad (sin mostrar horarios dentro del calendario)
+            const seenDates = new Set();
+            const events = [];
+            horariosActuales.forEach(h => {
+                if (!h.fechaISO || seenDates.has(h.fechaISO)) return;
+                seenDates.add(h.fechaISO);
+                events.push({
+                    start: h.fechaISO,
+                    allDay: true,
+                    display: "background",
+                    backgroundColor: "#d9ebff",
+                    borderColor: "#d9ebff"
+                });
             });
             console.log("[reserva] eventos calendar", events);
             calendar.addEventSource(events);
@@ -144,7 +150,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 horarioSeleccionado = null;
 
                 if (!list.length) {
-                    chips.innerHTML = `<p>No hay horarios libres para esa fecha.</p>`;
+                    const msg = document.createElement("p");
+                    msg.textContent = "No hay horarios libres para esa fecha.";
+                    const btnEspera = document.createElement("button");
+                    btnEspera.classList.add("chip-item", "chip-espera");
+                    btnEspera.textContent = "Agregar a lista de espera";
+                    btnEspera.addEventListener("click", async () => {
+                        if (!selEsp.value || !selMed.value || !agendaIdActual) {
+                            alert("Selecciona especialidad y médico para agregar a espera.");
+                            return;
+                        }
+                        try {
+                            const res = await fetch("/paciente/lista-espera", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                credentials: "include",
+                                body: JSON.stringify({
+                                    especialidadId: Number(selEsp.value),
+                                    medicoId: Number(selMed.value),
+                                    agendaId: Number(agendaIdActual),
+                                    fecha: fechaSel,
+                                    motivo: "Reserva web - espera"
+                                })
+                            });
+                            const data = await res.json().catch(() => ({}));
+                            if (!res.ok || data.ok === false) throw new Error(data.error || "No se pudo agregar a la lista de espera.");
+                            alert("Agregado a lista de espera.");
+                        } catch (err) {
+                            console.error(err);
+                            alert(err.message || "No se pudo agregar a la lista de espera.");
+                        }
+                    });
+                    chips.appendChild(msg);
+                    chips.appendChild(btnEspera);
                     return;
                 }
 

@@ -16,8 +16,27 @@
     <h2>Pacientes</h2>
 </header>
 <div id="navMenu" class="nav-menu hidden">
-    <button onclick="history.back()">⬅ Atrás</button>
-    <button onclick="history.forward()">➡ Adelante</button>
+    <button onclick="history.back()" aria-label="Atrás">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-left-dash">
+            <path d="M13 9a1 1 0 0 1-1-1V5.061a1 1 0 0 0-1.811-.75l-6.835 6.836a1.207 1.207 0 0 0 0 1.707l6.835 6.835a1 1 0 0 0 1.811-.75V16a1 1 0 0 1 1-1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"/>
+            <path d="M20 9v6"/>
+        </svg>
+    </button>
+    <button onclick="history.forward()" aria-label="Adelante">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash">
+            <path d="M11 9a1 1 0 0 0 1-1V5.061a1 1 0 0 1 1.811-.75l6.836 6.836a1.207 1.207 0 0 1 0 1.707l-6.836 6.835a1 1 0 0 1-1.811-.75V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/>
+            <path d="M4 9v6"/>
+        </svg>
+    </button>
+    <button onclick="window.location.href='/auth/logout'" aria-label="Cerrar sesión">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-door-open">
+            <path d="M11 20H2"/>
+            <path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z"/>
+            <path d="M11 4H8a2 2 0 0 0-2 2v14"/>
+            <path d="M14 12h.01"/>
+            <path d="M22 20h-3"/>
+        </svg>
+    </button>
 </div>
 
 

@@ -58,6 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    if (typeof validarFormulario === "function") {
+        const ok = validarFormulario(document.getElementById("loginForm"));
+        if (!ok) return;
+    }
+
     const form = document.getElementById("loginForm");
 
     const usuario = form.usuario.value.trim();

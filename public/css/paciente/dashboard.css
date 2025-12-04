@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    justify-content: space-between;
     border-radius: 22px;
     border: 1px solid #e3eefc;
 
@@ -142,6 +143,23 @@
     width: 45px;
     height: 45px;
     color: #2d8cff;
+}
+
+.logout-btn {
+    background: #eef4ff;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.18s ease;
+    color: #0d2a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logout-btn:hover {
+    background: #dbe7ff;
 }
 .welcome-card {
     margin-left: auto;
