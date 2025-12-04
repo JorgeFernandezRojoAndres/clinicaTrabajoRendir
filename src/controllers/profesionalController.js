@@ -88,12 +88,19 @@ const ProfesionalController = {
             await Profesional.update(id, data);
 
             if (Array.isArray(especialidades)) {
-                await ProfesionalEspecialidad.deleteByProfesional(id);
-                for (const espId of especialidades) {
-                    await ProfesionalEspecialidad.create({
-                        profesionalId: id,
-                        especialidadId: espId
-                    });
+                // No borramos las relaciones existentes para no romper FKs con agenda.
+                // Solo agregamos las nuevas que falten.
+                const actuales = await Profesional.getEspecialidadesProfesional(id);
+                const actualesIds = actuales.map(e => Number(e.especialidadId));
+                const nuevas = especialidades.map(e => Number(e));
+
+                for (const espId of nuevas) {
+                    if (!actualesIds.includes(Number(espId))) {
+                        await ProfesionalEspecialidad.create({
+                            profesionalId: id,
+                            especialidadId: espId
+                        });
+                    }
                 }
             }
 

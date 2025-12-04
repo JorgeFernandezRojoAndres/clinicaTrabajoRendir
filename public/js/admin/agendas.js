@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const selProfesional = document.querySelector("#profesionalSelect");
     const selEspecialidad = document.querySelector("#especialidadSelect");
+    const selSucursal = document.querySelector("#sucursalSelect");
     const selIntervalo = document.querySelector("#intervaloSelect");
     const btnCrear = document.querySelector("#btnCrearAgenda");
     const contenedorAgendas = document.querySelector("#listaAgendas");
@@ -29,17 +30,34 @@ document.addEventListener("DOMContentLoaded", async () => {
             const res = await fetch("/profesionales/medicos");
             const data = await res.json();
 
-            selProfesional.innerHTML = `<option value="">Seleccione...</option>`;
+        selProfesional.innerHTML = `<option value="">Seleccione...</option>`;
 
-            data.forEach(p => {
-                selProfesional.innerHTML += `
+        data.forEach(p => {
+            selProfesional.innerHTML += `
         <option value="${p.id}">${p.nombre}</option>
     `;
+        });
+
+
+    } catch (err) {
+        console.error("Error cargando profesionales:", err);
+    }
+}
+    // =========================================================================
+    // 1b. CARGAR SUCURSALES
+    // =========================================================================
+    async function cargarSucursales() {
+        try {
+            const res = await fetch("/agenda/sucursales");
+            const data = await res.json();
+            const sucursales = data.ok ? data.sucursales : [];
+
+            selSucursal.innerHTML = `<option value="">Seleccione...</option>`;
+            sucursales.forEach(s => {
+                selSucursal.innerHTML += `<option value="${s}">${s}</option>`;
             });
-
-
         } catch (err) {
-            console.error("Error cargando profesionales:", err);
+            console.error("Error cargando sucursales:", err);
         }
     }
 
@@ -70,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Si tiene una sola → seleccionarla automáticamente
             if (data.length === 1) {
                 selEspecialidad.innerHTML = `
-                <option value="${data[0].id}" selected>${data[0].nombre}</option>
+                <option value="${data[0].especialidadId}" selected>${data[0].especialidadNombre}</option>
             `;
                 return;
             }
@@ -79,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             selEspecialidad.innerHTML = `<option value="">Seleccione...</option>`;
             data.forEach(e => {
                 selEspecialidad.innerHTML += `
-                <option value="${e.id}">${e.nombre}</option>
+                <option value="${e.especialidadId}">${e.especialidadNombre}</option>
             `;
             });
 
@@ -94,6 +112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function crearAgenda() {
         const profesionalId = selProfesional.value;
         const especialidadId = selEspecialidad.value;
+        const sucursal = selSucursal.value;
         const intervalo = selIntervalo.value;
 
         const horaInicio = inputHoraInicio.value;
@@ -101,8 +120,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const diasLaborales = obtenerDiasLaborales();
 
-        if (!profesionalId || !especialidadId || !intervalo || !horaInicio || !horaFin) {
-            alert("Complete todos los campos.");
+        if (!profesionalId || !especialidadId || !intervalo || !horaInicio || !horaFin || !sucursal) {
+            alert("Complete todos los campos (incluida la sucursal).");
             return;
         }
 
@@ -118,21 +137,36 @@ document.addEventListener("DOMContentLoaded", async () => {
                     intervaloMin: intervalo,
                     diasLaborales,
                     horaInicio,
-                    horaFin
+                    horaFin,
+                    sucursal
                 })
             });
 
             const data = await res.json();
 
             if (data.ok) {
-                alert("Agenda creada correctamente");
+                Swal.fire({
+                    icon: "success",
+                    title: "Agenda creada",
+                    timer: 1400,
+                    showConfirmButton: false
+                });
                 cargarAgendas();
             } else {
-                alert("Error al crear agenda");
+                Swal.fire({
+                    icon: "error",
+                    title: "No se pudo crear",
+                    text: data.error || "Error al crear agenda"
+                });
             }
 
         } catch (err) {
             console.error("Error creando agenda:", err);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: err.message || "No se pudo crear la agenda"
+            });
         }
     }
 
@@ -229,6 +263,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // EJECUCIÓN INICIAL
     // =========================================================================
     await cargarProfesionales();
+    await cargarSucursales();
     //await cargarEspecialidades();
     await cargarAgendas();
 

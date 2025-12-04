@@ -155,16 +155,26 @@ document.addEventListener("click", async (e) => {
     Swal.fire({
         title: "Editar Profesional",
         html: `
-            <input id="editNombre" class="swal2-input" value="${nombreActual}">
-            <input id="editUsuario" class="swal2-input" value="${usuarioActual}">
-
-            <label style="margin-top:10px; font-weight:600">Especialidades</label>
-            <select id="editEsp" class="swal2-input" multiple style="height:120px;">
-                ${opciones}
-            </select>
-            <small style="font-size:12px; color:#666;">
-                (CTRL para seleccionar varias)
-            </small>
+            <div style="display:flex; flex-direction:column; gap:10px; text-align:left;">
+                <div>
+                    <label style="font-weight:600; color:#444;">Nombre</label>
+                    <input id="editNombre" class="swal2-input" value="${nombreActual}" style="margin-top:4px;">
+                </div>
+                <div>
+                    <label style="font-weight:600; color:#444;">Usuario</label>
+                    <input id="editUsuario" class="swal2-input" value="${usuarioActual}" style="margin-top:4px;">
+                </div>
+                <div>
+                    <label style="font-weight:600; color:#444;">Especialidades</label>
+                    <select id="editEsp" multiple size="6"
+                        style="width:100%; margin-top:6px; padding:10px; border:1px solid #d8d8d8; border-radius:10px; background:#f9f9f9;">
+                        ${opciones}
+                    </select>
+                    <small style="font-size:12px; color:#666;">
+                        Usá CTRL (o ⌘ en Mac) para seleccionar varias.
+                    </small>
+                </div>
+            </div>
         `,
         confirmButtonText: "Guardar",
         showCancelButton: true,
