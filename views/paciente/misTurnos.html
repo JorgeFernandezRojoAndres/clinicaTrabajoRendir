@@ -11,33 +11,20 @@
 
 <body>
 
-<header class="topbar">
-    <h2>MIS TURNOS</h2>
-</header>
-
-<main class="turnos-container">
-
-    <div class="turno-card">
-        <div class="info">
-            <h3>19/11 - 08:00 hs</h3>
-            <p><b>Especialidad:</b> Traumatología</p>
-            <p><b>Médico:</b> Dr. Gómez</p>
+<div class="turnos-bg">
+    <header class="turnos-header">
+        <div>
+            <p class="label">Mis Turnos</p>
+            <h1 id="pac-nombre-turnos">Paciente</h1>
         </div>
+        <a class="btn-home" href="/pac-panel">🏠 Inicio</a>
+    </header>
 
-        <button class="btn-cancelar">Cancelar</button>
-    </div>
+    <main class="turnos-lista">
+        <!-- Se cargan con JS -->
+    </main>
+</div>
 
-    <div class="turno-card confirmado">
-        <div class="info">
-            <h3>22/11 - 09:40 hs</h3>
-            <p><b>Especialidad:</b> Clínica Médica</p>
-            <p><b>Médico:</b> Dra. Martínez</p>
-        </div>
-
-        <span class="badge">Confirmado</span>
-    </div>
-
-</main>
-
+<script src="/js/paciente/misTurnos.js"></script>
 </body>
 </html>
