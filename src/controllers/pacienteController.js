@@ -1,4 +1,5 @@
 import Paciente from "../models/Paciente.js";
+import { db } from "../config/db.js";
 
 const PacienteController = {
     // Listar todos los pacientes
@@ -67,6 +68,34 @@ const PacienteController = {
             const data = await Paciente.getById(pacienteId);
             if (!data) return res.status(404).json({ ok: false, error: "Paciente no encontrado" });
             return res.json({ ok: true, paciente: data });
+        } catch (err) {
+            return res.status(500).json({ ok: false, error: err.message });
+        }
+    },
+
+    // Agregar a lista de espera desde el paciente
+    async addToWaitlist(req, res) {
+        try {
+            const pacienteId = req.session?.user?.id;
+            if (!pacienteId) {
+                return res.status(401).json({ ok: false, error: "Paciente no autenticado" });
+            }
+
+            const { especialidadId, medicoId, fecha } = req.body;
+
+            // La tabla LISTA_ESPERA solo tiene: pacienteId, profesionalId, especialidadId, fechaRegistro
+            await db.query(
+                `INSERT INTO LISTA_ESPERA (pacienteId, profesionalId, especialidadId, fechaRegistro)
+                 VALUES (?, ?, ?, ?)`,
+                [
+                    pacienteId,
+                    medicoId || null,
+                    especialidadId || null,
+                    fecha || new Date()
+                ]
+            );
+
+            return res.json({ ok: true });
         } catch (err) {
             return res.status(500).json({ ok: false, error: err.message });
         }

@@ -31,6 +31,7 @@ import PacienteController from "./src/controllers/pacienteController.js";
 import EspecialidadController from "./src/controllers/especialidadController.js";
 import ProfesionalController from "./src/controllers/profesionalController.js";
 import AgendaController from "./src/controllers/agendaController.js";
+import secretariaRoutes from "./src/routes/secretaria.js";
 
 // Necesario en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -121,8 +122,11 @@ app.get("/paciente/especialidades/:id/medicos", requireRole("paciente"), Profesi
 app.get("/paciente/agendas", requireRole("paciente"), AgendaController.buscar);
 app.get("/paciente/horarios-libres/:id", requireRole("paciente"), AgendaController.horariosLibres);
 app.post("/paciente/reserva", requireRole("paciente"), TurnoController.crearDesdeCalendario);
+app.post("/paciente/lista-espera", requireRole("paciente"), PacienteController.addToWaitlist);
 // 🔹 Pacientes → Solo SECRETARIA
 app.use("/pacientes", requireRoles(["secretaria", "admin"]), pacientesRoutes);
+// 🔹 Secretaría (panel y vistas propias)
+app.use("/secretaria", requireRole("secretaria"), secretariaRoutes);
 
 // 🔹 Profesionales → Solo ADMIN
 app.use("/profesionales", requireRoles(["admin", "secretaria"]), profesionalesRoutes);
