@@ -23,6 +23,15 @@ const Diagnostico = {
         return result.insertId;
     },
 
+    // Diagnósticos por atención
+    async getByAtencion(atencionId) {
+        const [rows] = await db.query(
+            "SELECT * FROM DIAGNOSTICO WHERE atencionId = ? ORDER BY id DESC",
+            [atencionId]
+        );
+        return rows;
+    },
+
     async update(id, data) {
         const { atencionId, descripcion, tipo } = data;
         await db.query(

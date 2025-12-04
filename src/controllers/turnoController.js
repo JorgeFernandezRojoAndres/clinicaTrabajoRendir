@@ -153,6 +153,7 @@ const TurnoController = {
                         const nuevoSobre = await Sobreturno.create({
                             pacienteId,
                             motivo: motivo || "",
+                            fechaHoraManual: horario.fechaHora, // Persistimos la fecha/hora real para filtrados
                             profesionalId: profesionalIdReal,
                             especialidadId: especialidadIdReal
                         });
@@ -295,20 +296,15 @@ async profesionalDelDia(req, res) {
                 st.id,
                 st.pacienteId AS id_paciente,
                 p.nombreCompleto AS paciente,
-                COALESCE(
-                    DATE_FORMAT(ha.fechaHora, '%H:%i'),
-                    DATE_FORMAT(st.fechaHoraManual, '%H:%i')
-                ) AS hora,
+                DATE_FORMAT(st.fechaHoraManual, '%H:%i') AS hora,
                 'SOBRETURNO' AS estado
             FROM sobreturno st
             JOIN paciente p ON p.id = st.pacienteId
-            LEFT JOIN horario_agenda ha ON ha.id = st.horarioAgendaId
-            LEFT JOIN agenda a ON a.id = ha.agendaId
-            LEFT JOIN profesional_especialidad pe ON pe.id = a.profesionalEspecialidadId
             WHERE
-                (COALESCE(pe.profesionalId, st.profesionalId) = ?)
-                AND DATE(COALESCE(ha.fechaHora, st.fechaHoraManual)) = ?
-            ORDER BY hora ASC
+                st.profesionalId = ?
+                AND st.fechaHoraManual IS NOT NULL
+                AND DATE(st.fechaHoraManual) = ?
+            ORDER BY st.fechaHoraManual ASC
         `, [profesionalId, fecha]);
 
         const turnosConSobre = [
@@ -428,7 +424,7 @@ async iniciarConsulta(req, res) {
 
     // ===========================================================
 // 📌 FINALIZAR CONSULTA
-// PUT /turnos/finalizar/:id
+    // PUT /turnos/finalizar/:id
 // ===========================================================
 async finalizarConsulta(req, res) {
     try {
@@ -448,6 +444,29 @@ async finalizarConsulta(req, res) {
 
         if (estadoActual !== "EN CONSULTA") {
             return res.status(400).json({ ok: false, error: "El turno no está en consulta" });
+        }
+
+        // Validar requisitos clínicos: debe haber al menos un diagnóstico y una evolución
+        const [atRows] = await db.query(
+            "SELECT id, evolucion FROM atencion WHERE turnoId = ?",
+            [id]
+        );
+
+        if (!atRows[0]) {
+            return res.status(400).json({ ok: false, error: "No existe la atención para este turno" });
+        }
+
+        const evolucion = (atRows[0].evolucion || "").trim();
+        if (!evolucion) {
+            return res.status(400).json({ ok: false, error: "Cargá una evolución antes de cerrar" });
+        }
+
+        const [diagCountRows] = await db.query(
+            "SELECT COUNT(*) AS total FROM diagnostico WHERE atencionId = ?",
+            [atRows[0].id]
+        );
+        if (!diagCountRows[0] || diagCountRows[0].total === 0) {
+            return res.status(400).json({ ok: false, error: "Cargá al menos un diagnóstico" });
         }
 
         // Marcar finalizado

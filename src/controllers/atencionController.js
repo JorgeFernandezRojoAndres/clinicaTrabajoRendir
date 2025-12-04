@@ -85,6 +85,7 @@ const AtencionController = {
             const antecedentes = await Antecedente.getByAtencionId(atencionId);
             const habitos = await Habito.getByAtencionId(atencionId);
             const medicamentos = await MedicamentoUso.getByAtencionId(atencionId);
+            const diagnosticos = await Diagnostico.getByAtencion(atencionId);
 
             return res.json({
                 ok: true,
@@ -95,7 +96,8 @@ const AtencionController = {
                     antecedentes,
                     habitos,
                     medicamentos
-                }
+                },
+                diagnosticos
             });
 
         } catch (err) {

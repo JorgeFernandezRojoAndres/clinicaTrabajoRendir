@@ -21,11 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const contAntecedentes  = document.querySelector("#antecedentes");
     const contHabitos       = document.querySelector("#habitos");
     const contMedicacion    = document.querySelector("#medicacion");
+    const listaDiagnosticos = document.querySelector("#listaDiagnosticos");
+    const btnAddDiag        = document.querySelector("#btnAddDiag");
 
     if (!inputNombre) return;
 
     // ID REAL DE LA ATENCIÓN
     let atencionId = null;
+    let diagnosticosCache = [];
 
     try {
         // 🔥 NUEVA RUTA CORRECTA
@@ -63,6 +66,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderTexto(contHabitos,      data.historiaClinica.habitos);
         renderTexto(contMedicacion,   data.historiaClinica.medicamentos);
 
+        // =====================================================
+        // 📌 CARGAR DIAGNÓSTICOS
+        // =====================================================
+        diagnosticosCache = data.diagnosticos || [];
+        renderDiagnosticos();
+
     } catch (err) {
         console.error("Error cargando atención:", err);
     }
@@ -96,6 +105,121 @@ document.addEventListener("DOMContentLoaded", async () => {
             .join("\n");
     }
 
+    // -----------------------------------------------------
+    // Renderizar diagnósticos
+    // -----------------------------------------------------
+    function renderDiagnosticos() {
+        if (!listaDiagnosticos) return;
+        if (!diagnosticosCache || diagnosticosCache.length === 0) {
+            listaDiagnosticos.innerHTML = "<p class=\"muted\">Sin diagnósticos cargados.</p>";
+            return;
+        }
+
+        listaDiagnosticos.innerHTML = "";
+
+        diagnosticosCache.forEach(diag => {
+            const item = document.createElement("div");
+            item.classList.add("diag-item");
+            item.innerHTML = `
+                <div>
+                    <strong>${diag.tipo || "Preliminar"}</strong><br>
+                    <span>${diag.descripcion || ""}</span>
+                </div>
+                <button class="btn-borrar" data-id="${diag.id}">Eliminar</button>
+            `;
+            listaDiagnosticos.appendChild(item);
+        });
+
+        listaDiagnosticos.querySelectorAll(".btn-borrar").forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+                const id = e.target.dataset.id;
+                if (!id) return;
+
+                const confirm = await Swal.fire({
+                    icon: "warning",
+                    title: "Eliminar diagnóstico",
+                    text: "¿Confirmás eliminarlo?",
+                    showCancelButton: true,
+                    confirmButtonText: "Sí, eliminar"
+                });
+                if (!confirm.isConfirmed) return;
+
+                try {
+                    const res = await fetch(`/diagnosticos/${id}`, { method: "DELETE" });
+                    const data = await res.json();
+                    if (!data.ok) throw new Error(data.error || "No se pudo eliminar");
+
+                    diagnosticosCache = diagnosticosCache.filter(d => String(d.id) !== String(id));
+                    renderDiagnosticos();
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire("Error", err.message || "No se pudo eliminar", "error");
+                }
+            });
+        });
+    }
+
+    // -----------------------------------------------------
+    // Añadir diagnóstico
+    // -----------------------------------------------------
+    btnAddDiag?.addEventListener("click", async () => {
+        if (!atencionId) {
+            return Swal.fire("Atención no encontrada", "Reabrí la consulta e intenta de nuevo.", "error");
+        }
+
+        const { value: formValues, isConfirmed } = await Swal.fire({
+            title: "Nuevo diagnóstico",
+            html: `
+                <textarea id="diag-desc" class="swal2-textarea" placeholder="Descripción" rows="4"></textarea>
+                <select id="diag-tipo" class="swal2-select">
+                    <option value="preliminar" selected>Preliminar</option>
+                    <option value="definitivo">Definitivo</option>
+                    <option value="probable">Probable</option>
+                </select>
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                const descripcion = (document.getElementById("diag-desc").value || "").trim();
+                const tipo = (document.getElementById("diag-tipo").value || "preliminar").trim();
+                if (!descripcion) {
+                    Swal.showValidationMessage("Ingresá una descripción");
+                    return false;
+                }
+                return { descripcion, tipo };
+            },
+            confirmButtonText: "Guardar",
+            cancelButtonText: "Cancelar",
+            showCancelButton: true
+        });
+
+        if (!isConfirmed || !formValues) return;
+
+        try {
+            const res = await fetch("/diagnosticos", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    atencionId,
+                    descripcion: formValues.descripcion,
+                    tipo: formValues.tipo
+                })
+            });
+            const data = await res.json();
+            if (!data.ok) throw new Error(data.error || "No se pudo guardar");
+
+            diagnosticosCache.unshift({
+                id: data.id,
+                descripcion: formValues.descripcion,
+                tipo: formValues.tipo
+            });
+            renderDiagnosticos();
+            Swal.fire("Guardado", "Diagnóstico agregado.", "success");
+        } catch (err) {
+            console.error(err);
+            Swal.fire("Error", err.message || "No se pudo guardar el diagnóstico.", "error");
+        }
+    });
+
     // =====================================================
     // 📌 BOTÓN GUARDAR EVOLUCIÓN (UPDATE ATENCIÓN)
     // =====================================================
@@ -128,36 +252,44 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-});
-// ======================================================
-// 📌 BOTÓN "CERRAR CONSULTA" — MARCA EL TURNO COMO ATENDIDO
-// ======================================================
-document.querySelector("#btnCerrar").addEventListener("click", async () => {
+    // ======================================================
+    // 📌 BOTÓN "CERRAR CONSULTA" — MARCA EL TURNO COMO ATENDIDO
+    // ======================================================
+    document.querySelector("#btnCerrar").addEventListener("click", async () => {
 
-    try {
-        const res = await fetch(`/turnos/finalizar/${idTurno}`, {
-            method: "PUT"
-        });
-
-        const data = await res.json();
-
-        if (!data.ok) {
-            return Swal.fire("Error", data.error, "error");
+        if (!diagnosticosCache || diagnosticosCache.length === 0) {
+            return Swal.fire("No se puede cerrar", "Agregá al menos un diagnóstico.", "warning");
+        }
+        if (!txtEvolucion.value.trim()) {
+            return Swal.fire("No se puede cerrar", "Cargá una evolución.", "warning");
         }
 
-        Swal.fire({
-            icon: "success",
-            title: "Consulta finalizada",
-            timer: 1500,
-            showConfirmButton: false
-        });
+        try {
+            const res = await fetch(`/turnos/finalizar/${idTurno}`, {
+                method: "PUT"
+            });
 
-        setTimeout(() => {
-            window.location.href = "/pro-panel";
-        }, 1500);
+            const data = await res.json();
 
-    } catch (err) {
-        console.error(err);
-        Swal.fire("Error", "No se pudo cerrar la consulta.", "error");
-    }
+            if (!data.ok) {
+                return Swal.fire("Error", data.error, "error");
+            }
+
+            Swal.fire({
+                icon: "success",
+                title: "Consulta finalizada",
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            setTimeout(() => {
+                window.location.href = "/pro-panel";
+            }, 1500);
+
+        } catch (err) {
+            console.error(err);
+            Swal.fire("Error", "No se pudo cerrar la consulta.", "error");
+        }
+    });
+
 });

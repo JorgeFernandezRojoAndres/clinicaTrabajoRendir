@@ -78,3 +78,24 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+.diag-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    border: 1px solid #cad8f8;
+    background: #eef4ff;
+}
+
+.diag-item .btn-borrar {
+    background: #ff6464;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
