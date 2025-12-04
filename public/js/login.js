@@ -67,7 +67,8 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const res = await fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ usuario, password, rol })
+        body: JSON.stringify({ usuario, password, rol }),
+        credentials: "include"
     });
 
     const data = await res.json();

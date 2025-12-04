@@ -25,6 +25,7 @@ import diagnosticosRoutes from "./src/routes/diagnosticos.js";
 // ⭐ Rutas del Admin (API + Vistas)
 import adminRoutes from "./src/routes/admin.js";
 import proHistoriaRoutes from "./src/routes/pro-historia.js";
+import proPanelRoutes from "./src/routes/pro-panel.js";
 
 // Necesario en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -126,6 +127,8 @@ app.use("/agenda", requireRoles(["secretaria", "profesional", "admin"]), agendaR
 // 🔹 Turnos → SECRETARIA o PROFESIONAL
 app.use("/turnos", requireRoles(["secretaria", "profesional"]), turnosRoutes);
 app.use("/api/feriados", diasNoLaborablesRoutes);
+// 🔹 Panel profesional (HTML + datos)
+app.use("/", proPanelRoutes);
 
 // --------------------------------------------------
 // RUTAS HTML (VISTAS)

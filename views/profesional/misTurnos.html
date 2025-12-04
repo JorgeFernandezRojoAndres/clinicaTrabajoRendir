@@ -33,13 +33,13 @@
     <header class="topbar">
         <button class="menu-btn">☰</button>
 
-        <h2>MIS TURNOS DEL DÍA</h2>
+        <h2>MIS TURNOS DEL DÍA <span id="prof-nombre-titulo"></span></h2>
 
         <div class="topbar-user">
             <img src="/img/user.png" class="user-photo" alt="Foto">
             <div>
-                <p class="user-name">Profesional</p>
-                <p class="user-mail">@correo</p>
+                <p class="user-name" id="prof-nombre">Profesional</p>
+                <p class="user-mail" id="prof-usuario">@correo</p>
             </div>
         </div>
     </header>
@@ -72,23 +72,52 @@
     <script src="/js/profesional/misTurnos.js"></script>
 
     <script>
-        // Sidebar toggle
-        const menuBtn = document.querySelector(".menu-btn");
-        const sidebar = document.querySelector(".sidebar");
+        document.addEventListener("DOMContentLoaded", () => {
+            // Sidebar toggle
+            const menuBtn = document.querySelector(".menu-btn");
+            const sidebar = document.querySelector(".sidebar");
 
-        menuBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-        });
+            menuBtn?.addEventListener("click", () => {
+                sidebar?.classList.toggle("open");
+            });
 
-        // Redirigir a vista de atención
-        document.addEventListener("click", (e) => {
-            const btn = e.target.closest(".btn-atender");
-            if (!btn || btn.disabled) return;
+            // Redirigir a vista de atención
+            document.addEventListener("click", (e) => {
+                const btn = e.target.closest(".btn-atender");
+                if (!btn || btn.disabled) return;
 
-            const id = btn.dataset.id;
-            if (!id) return;
+                const id = btn.dataset.id;
+                if (!id) return;
 
-            window.location.href = `/pro-atencion/${id}`;
+                window.location.href = `/pro-atencion/${id}`;
+            });
+
+            // Cargar datos del profesional para el topbar y título
+            (async () => {
+                try {
+                    const resp = await fetch("/pro-panel/datos", {
+                        credentials: "include"
+                    });
+                    if (!resp.ok) {
+                        console.error("Error HTTP /pro-panel/datos:", resp.status);
+                        return;
+                    }
+                    const data = await resp.json();
+                    if (!data.ok) {
+                        console.error("Respuesta no OK /pro-panel/datos:", data);
+                        return;
+                    }
+                    const { nombre, usuario } = data.profesional || data || {};
+                    const nombreEl = document.getElementById("prof-nombre");
+                    const usuarioEl = document.getElementById("prof-usuario");
+                    const tituloEl = document.getElementById("prof-nombre-titulo");
+                    if (nombreEl && nombre) nombreEl.textContent = nombre;
+                    if (usuarioEl && usuario) usuarioEl.textContent = usuario;
+                    if (tituloEl && nombre) tituloEl.textContent = `— ${nombre}`;
+                } catch (err) {
+                    console.error("Error cargando profesional:", err);
+                }
+            })();
         });
     </script>
 
