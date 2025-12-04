@@ -131,11 +131,12 @@ app.use("/diagnosticos", requireRole("profesional"), diagnosticosRoutes);
 // 🔹 Agenda → SECRETARIA o PROFESIONAL
 app.use("/agenda", requireRoles(["secretaria", "profesional", "admin"]), agendaRoutes);
 
+// 🔹 Turnos del paciente (sesión paciente) - antes de las rutas protegidas de turnos
+app.get("/turnos/paciente", requireRole("paciente"), TurnoController.pacienteMisTurnos);
+
 // 🔹 Turnos → SECRETARIA o PROFESIONAL
 app.use("/turnos", requireRoles(["secretaria", "profesional"]), turnosRoutes);
 app.use("/api/feriados", diasNoLaborablesRoutes);
-// 🔹 Turnos del paciente (sesión paciente)
-app.get("/turnos/paciente", requireRole("paciente"), TurnoController.pacienteMisTurnos);
 // 🔹 Panel profesional (HTML + datos)
 app.use("/", proPanelRoutes);
 
