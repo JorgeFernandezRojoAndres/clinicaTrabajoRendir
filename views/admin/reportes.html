@@ -37,38 +37,35 @@
         <div class="grid-3">
             <div class="field">
                 <label>Tipo de reporte</label>
-                <select>
-                    <option>Turnos por día</option>
-                    <option>Consultas por profesional</option>
-                    <option>Pacientes nuevos</option>
+                <select id="tipo-reporte">
+                    <option value="turnos-dia">Turnos por día</option>
+                    <option value="consultas-profesional">Consultas por profesional</option>
                 </select>
             </div>
 
             <div class="field">
                 <label>Desde</label>
-                <input type="date">
+                <input id="fecha-desde" type="date">
             </div>
 
             <div class="field">
                 <label>Hasta</label>
-                <input type="date">
+                <input id="fecha-hasta" type="date">
             </div>
         </div>
 
-        <button class="btn-guardar">Generar</button>
+        <button class="btn-guardar" id="btn-generar">Generar</button>
     </section>
 
     <section class="box">
-        <h3>Últimos reportes generados</h3>
+        <h3>Resultado</h3>
 
-        <div class="rep-item">
-            <p>Turnos — 10/11/2025</p>
-            <button class="btn-descargar">Descargar</button>
+        <div id="contenedor-resultado">
+            <p>Genera un reporte para ver los datos aquí.</p>
         </div>
 
-        <div class="rep-item">
-            <p>Consultas — 08/11/2025</p>
-            <button class="btn-descargar">Descargar</button>
+        <div class="rep-acciones" id="acciones-reporte" style="display:none;">
+            <button class="btn-descargar" id="btn-descargar">Descargar CSV</button>
         </div>
 
     </section>
@@ -79,6 +76,7 @@ document.querySelector(".menu-btn").addEventListener("click", () => {
     document.getElementById("navMenu").classList.toggle("hidden");
 });
 </script>
+<script src="/js/admin/reportes.js"></script>
 
 </body>
 </html>

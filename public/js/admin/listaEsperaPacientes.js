@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function cargarPendientes() {
         try {
-            const res = await fetch("/admin/pacientes-pendientes");
+            const res = await fetch("/admin-panel/pacientes-pendientes");
             const data = await res.json();
 
             tbody.innerHTML = "";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 tbody.innerHTML += `
                     <tr>
                         <td>${p.id}</td>
-                        <td>${p.nombre} ${p.apellido}</td>
+                        <td>${p.nombreCompleto || "-"}</td>
                         <td>${p.dni}</td>
                         <td>${p.obraSocial || "-"}</td>
                         <td>${p.telefono || "-"}</td>
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function procesarAccion(id, accion) {
         try {
-            const res = await fetch(`/admin/pacientes-pendientes/${id}/${accion}`, {
+            const res = await fetch(`/admin-panel/pacientes-pendientes/${id}/${accion}`, {
                 method: "PUT"
             });
 
