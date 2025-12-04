@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // poner nombre si está disponible desde dashboard
     try {
-        const r = await fetch("/paciente/datos", { credentials: "include" });
+        const r = await fetch("/paciente/datos/json", { credentials: "include" });
         const d = await r.json();
         if (d.ok && d.paciente && nombreEl) {
             nombreEl.textContent = d.paciente.nombreCompleto || "Paciente";

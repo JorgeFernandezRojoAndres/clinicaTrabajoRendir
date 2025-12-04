@@ -181,8 +181,11 @@ app.get("/pac-panel/turnos", requireRole("paciente"), (req, res) => {
 app.get("/paciente/reservar", requireRole("paciente"), (req, res) => {
     res.sendFile(path.join(__dirname, "views/paciente/reservar.html"));
 });
-// Datos del paciente logueado
-app.get("/paciente/datos", requireRole("paciente"), PacienteController.getMe);
+// Datos del paciente logueado (vista y api)
+app.get("/paciente/datos", requireRole("paciente"), (req, res) => {
+    res.sendFile(path.join(__dirname, "views/paciente/datos.html"));
+});
+app.get("/paciente/datos/json", requireRole("paciente"), PacienteController.getMe);
 
 // Panel Admin (dashboard principal)
 app.get("/admin-panel", requireRole("admin"), (req, res) => {

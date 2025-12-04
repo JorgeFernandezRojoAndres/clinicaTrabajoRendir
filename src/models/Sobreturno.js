@@ -79,16 +79,10 @@ const Sobreturno = {
     // 🔍 Si no hay horario (es null), no hay que validar nada
     async existeSobreturnoPaciente(horarioAgendaId, pacienteId) {
 
-        if (!horarioAgendaId) {
-            return false; // los sobreturnos sin horario no chocan con nada
-        }
-
-        const [rows] = await db.query(
-            "SELECT * FROM SOBRETURNO WHERE horarioAgendaId = ? AND pacienteId = ?",
-            [horarioAgendaId, pacienteId]
-        );
-
-        return rows.length > 0;
+        // La tabla SOBRETURNO ya no tiene horarioAgendaId.
+        // Si se pasa un horario, no hay choque directo: se permite.
+        // Esta validación se mantiene por compatibilidad de firma.
+        return false;
     }
 };
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Datos</title>
+    <link rel="stylesheet" href="/css/paciente/paciente.css">
+    <link rel="stylesheet" href="/css/paciente/datos.css">
+</head>
+
+<body>
+    <div class="datos-bg">
+        <header class="datos-header">
+            <div>
+                <p class="label">Perfil</p>
+                <h1>Mis datos</h1>
+            </div>
+            <a class="btn-home" href="/pac-panel">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                Inicio
+            </a>
+
+        </header>
+
+        <section class="datos-card">
+            <div class="dato">
+                <span>Nombre completo</span>
+                <strong id="d-nombre">-</strong>
+            </div>
+            <div class="dato">
+                <span>DNI</span>
+                <strong id="d-dni">-</strong>
+            </div>
+            <div class="dato">
+                <span>Obra social</span>
+                <strong id="d-obra">-</strong>
+            </div>
+            <div class="dato">
+                <span>Contacto</span>
+                <strong id="d-contacto">-</strong>
+            </div>
+            <div class="dato">
+                <span>Estado</span>
+                <strong id="d-estado">-</strong>
+            </div>
+        </section>
+    </div>
+    <script src="/js/paciente/datos.js"></script>
+</body>
+
+</html>

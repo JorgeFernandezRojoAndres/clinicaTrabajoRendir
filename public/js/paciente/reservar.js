@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let horariosActuales = [];
 
     // Cargar nombre paciente
-    fetch("/paciente/datos", { credentials: "include" })
+    fetch("/paciente/datos/json", { credentials: "include" })
         .then(r => r.json())
         .then(data => {
             if (data.ok && data.paciente && nombreEl) {

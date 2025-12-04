@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const res = await fetch("/paciente/datos", { credentials: "include" });
+        const res = await fetch("/paciente/datos/json", { credentials: "include" });
         const data = await res.json();
         if (data.ok && data.paciente) {
             const nombre = data.paciente.nombreCompleto || "Paciente";
